@@ -32,8 +32,11 @@ public class Inventario extends javax.swing.JPanel {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btn_usuarios = new javax.swing.JButton();
+        btn_materiales = new javax.swing.JButton();
+        btn_maquinas = new javax.swing.JButton();
+        btn_controlHerramientas = new javax.swing.JButton();
+        btn_informes = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -89,9 +92,40 @@ public class Inventario extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("USUARIOS");
+        btn_usuarios.setText("USUARIOS");
+        btn_usuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_usuariosMouseClicked(evt);
+            }
+        });
 
-        jButton3.setText("MATERIAL");
+        btn_materiales.setText("MATERIALES");
+        btn_materiales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_materialesMouseClicked(evt);
+            }
+        });
+
+        btn_maquinas.setText("MÁQUINAS");
+        btn_maquinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_maquinasMouseClicked(evt);
+            }
+        });
+
+        btn_controlHerramientas.setText("CONTROL HERRAMIENTAS");
+        btn_controlHerramientas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_controlHerramientasMouseClicked(evt);
+            }
+        });
+
+        btn_informes.setText("INFORMES");
+        btn_informes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_informesMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -100,10 +134,16 @@ public class Inventario extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(btn_usuarios)
+                .addGap(18, 18, 18)
+                .addComponent(btn_maquinas)
+                .addGap(18, 18, 18)
+                .addComponent(btn_materiales)
+                .addGap(18, 18, 18)
+                .addComponent(btn_informes)
+                .addGap(18, 18, 18)
+                .addComponent(btn_controlHerramientas)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -112,8 +152,11 @@ public class Inventario extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_maquinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_materiales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_informes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_controlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -173,7 +216,7 @@ public class Inventario extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox4, 0, 380, Short.MAX_VALUE))
+                                .addComponent(jComboBox4, 0, 153, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -212,7 +255,7 @@ public class Inventario extends javax.swing.JPanel {
                         .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel13)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -432,11 +475,84 @@ public class Inventario extends javax.swing.JPanel {
             frame.revalidate(); // Actualizar la interfaz
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void btn_usuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_usuariosMouseClicked
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            //frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz    
+    }//GEN-LAST:event_btn_usuariosMouseClicked
+
+    private void btn_maquinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_maquinasMouseClicked
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            //frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz   
+    }//GEN-LAST:event_btn_maquinasMouseClicked
+
+    private void btn_materialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_materialesMouseClicked
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            //frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz   
+    }//GEN-LAST:event_btn_materialesMouseClicked
+
+    private void btn_informesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_informesMouseClicked
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            //frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz   
+    }//GEN-LAST:event_btn_informesMouseClicked
+
+    private void btn_controlHerramientasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_controlHerramientasMouseClicked
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz   
+    }//GEN-LAST:event_btn_controlHerramientasMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_controlHerramientas;
+    private javax.swing.JButton btn_informes;
+    private javax.swing.JButton btn_maquinas;
+    private javax.swing.JButton btn_materiales;
+    private javax.swing.JButton btn_usuarios;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

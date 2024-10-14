@@ -94,24 +94,30 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="BotonPANEL" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="BotonAlmacen" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="BotonHerramientas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="BotonMaterial" min="-2" max="-2" attributes="0"/>
+                      <Component id="BotonMaterial" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="BotonAlmacen" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="326" max="32767" attributes="0"/>
+                      <Component id="BotonInformes" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="BotonControlHerramientas" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="14" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="BotonPANEL" pref="35" max="32767" attributes="0"/>
-                          <Component id="BotonHerramientas" max="32767" attributes="0"/>
-                          <Component id="BotonMaterial" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BotonPANEL" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="BotonAlmacen" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BotonHerramientas" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BotonMaterial" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BotonInformes" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BotonControlHerramientas" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -129,7 +135,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="BotonHerramientas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="MAQUINAS"/>
+                <Property name="text" type="java.lang.String" value="M&#xc1;QUINAS"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BotonHerramientasMouseClicked"/>
@@ -137,7 +143,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="BotonMaterial">
               <Properties>
-                <Property name="text" type="java.lang.String" value="MATERIAL"/>
+                <Property name="text" type="java.lang.String" value="MATERIALES"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BotonMaterialMouseClicked"/>
@@ -149,6 +155,22 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BotonAlmacenMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="BotonInformes">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="INFORMES"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BotonInformesMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="BotonControlHerramientas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="CONTROL HERRAMIENTAS"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BotonControlHerramientasMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>
@@ -175,7 +197,7 @@
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jComboBoxBEstado" min="-2" pref="129" max="-2" attributes="0"/>
-                              <EmptySpace pref="241" max="32767" attributes="0"/>
+                              <EmptySpace pref="68" max="32767" attributes="0"/>
                               <Component id="jButtonActualizar" min="-2" pref="132" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jButtonBusqueda" min="-2" pref="132" max="-2" attributes="0"/>

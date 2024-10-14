@@ -60,6 +60,7 @@
                       <Component id="BOTONMaquinas" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
                       <Component id="BOTONMateriales" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
                       <Component id="BOTONInformes" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
+                      <Component id="BOTONControlHerramientas" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -78,7 +79,9 @@
                   <Component id="BOTONMateriales" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="BOTONInformes" min="-2" pref="43" max="-2" attributes="0"/>
-                  <EmptySpace pref="328" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="BOTONControlHerramientas" min="-2" pref="43" max="-2" attributes="0"/>
+                  <EmptySpace pref="267" max="32767" attributes="0"/>
                   <Component id="BOTONAGREGAR" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
@@ -138,6 +141,15 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONInformesMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BOTONInformesActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="BOTONControlHerramientas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Control Herramientas"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONControlHerramientasMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BOTONControlHerramientasActionPerformed"/>
           </Events>
         </Component>
         <Menu class="javax.swing.JMenuBar" name="jMenuBar1">

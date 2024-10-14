@@ -79,22 +79,31 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="BOTONUsuarios" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="BOTONInventario1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="BOTONMateriales" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="BOTONInformes" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="BOTONControlHerramientas" min="-2" pref="190" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton1" alignment="0" pref="35" max="32767" attributes="0"/>
-                          <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButton1" alignment="0" pref="43" max="32767" attributes="0"/>
+                          <Component id="BOTONUsuarios" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BOTONInventario1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BOTONMateriales" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BOTONInformes" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BOTONControlHerramientas" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -111,15 +120,46 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="BOTONUsuarios">
               <Properties>
-                <Property name="text" type="java.lang.String" value="MATERIAL"/>
+                <Property name="text" type="java.lang.String" value="USUARIOS"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONUsuariosMouseClicked"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton3">
+            <Component class="javax.swing.JButton" name="BOTONInformes">
               <Properties>
-                <Property name="text" type="java.lang.String" value="MATERIAL"/>
+                <Property name="text" type="java.lang.String" value="INFORMES"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONInformesMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="BOTONInventario1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="INVENTARIO"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONInventario1MouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="BOTONControlHerramientas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="CONTROL HERRAMIENTAS"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONControlHerramientasMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="BOTONMateriales">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="MATERIALES"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONMaterialesMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BOTONMaterialesActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -191,7 +231,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="520" max="-2" attributes="0"/>
-                      <EmptySpace pref="113" max="32767" attributes="0"/>
+                      <EmptySpace pref="105" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

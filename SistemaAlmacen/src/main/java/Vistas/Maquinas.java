@@ -49,8 +49,11 @@ public class Maquinas extends javax.swing.JPanel {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        BOTONUsuarios = new javax.swing.JButton();
+        BOTONInformes = new javax.swing.JButton();
+        BOTONInventario1 = new javax.swing.JButton();
+        BOTONControlHerramientas = new javax.swing.JButton();
+        BOTONMateriales = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -106,9 +109,45 @@ public class Maquinas extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("MATERIAL");
+        BOTONUsuarios.setText("USUARIOS");
+        BOTONUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONUsuariosMouseClicked(evt);
+            }
+        });
 
-        jButton3.setText("MATERIAL");
+        BOTONInformes.setText("INFORMES");
+        BOTONInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONInformesMouseClicked(evt);
+            }
+        });
+
+        BOTONInventario1.setText("INVENTARIO");
+        BOTONInventario1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONInventario1MouseClicked(evt);
+            }
+        });
+
+        BOTONControlHerramientas.setText("CONTROL HERRAMIENTAS");
+        BOTONControlHerramientas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONControlHerramientasMouseClicked(evt);
+            }
+        });
+
+        BOTONMateriales.setText("MATERIALES");
+        BOTONMateriales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONMaterialesMouseClicked(evt);
+            }
+        });
+        BOTONMateriales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BOTONMaterialesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,10 +156,16 @@ public class Maquinas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONUsuarios)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONInventario1)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONMateriales)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONInformes)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONControlHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -128,9 +173,12 @@ public class Maquinas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(BOTONUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BOTONInventario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BOTONMateriales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BOTONInformes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BOTONControlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -215,7 +263,7 @@ public class Maquinas extends javax.swing.JPanel {
                     .addComponent(jLabel13))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
@@ -589,6 +637,80 @@ public class Maquinas extends javax.swing.JPanel {
     private void jTextFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldMarcaActionPerformed
+
+    private void BOTONUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONUsuariosMouseClicked
+         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            //frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz
+    }//GEN-LAST:event_BOTONUsuariosMouseClicked
+
+    private void BOTONInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONInformesMouseClicked
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            //frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz    
+    }//GEN-LAST:event_BOTONInformesMouseClicked
+
+    private void BOTONInventario1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONInventario1MouseClicked
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            //frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz    
+    }//GEN-LAST:event_BOTONInventario1MouseClicked
+
+    private void BOTONControlHerramientasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONControlHerramientasMouseClicked
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz    
+    }//GEN-LAST:event_BOTONControlHerramientasMouseClicked
+
+    private void BOTONMaterialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONMaterialesMouseClicked
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println("Bandera 5");
+            frame.setSize(1500, 810);
+            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
+            frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
+            //frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
+            //frame.setContentPane(new ControlHerramientas()); // Cambiar al nuevo panel
+            System.out.println("Bandera 5");
+            frame.revalidate(); // Actualizar la interfaz    
+    }//GEN-LAST:event_BOTONMaterialesMouseClicked
+
+    private void BOTONMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONMaterialesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONMaterialesActionPerformed
     private byte[] fotoSeleccionada; // Variable para almacenar la imagen seleccionada en bytes
 
 // Método para convertir la imagen a bytes (para guardar en la base de datos)
@@ -607,11 +729,14 @@ public class Maquinas extends javax.swing.JPanel {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BOTONControlHerramientas;
+    private javax.swing.JButton BOTONInformes;
+    private javax.swing.JButton BOTONInventario1;
+    private javax.swing.JButton BOTONMateriales;
+    private javax.swing.JButton BOTONUsuarios;
     private javax.swing.JLabel Fecha;
     private javax.swing.JButton Guardar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
