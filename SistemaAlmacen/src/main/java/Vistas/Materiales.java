@@ -16,9 +16,13 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,17 +31,71 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Materiales extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Material
-     */
+    
+    
+
+    
+    
     public Materiales() {
         initComponents();
         cargarMateriales();
         mostrarFechaActual();
         
-     
+            // Detectar la selección de filas en la tabla
+    jTableMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int selectedRow = jTableMaterial.getSelectedRow(); // Obtener la fila seleccionada
+            if (selectedRow != -1) { // Verificar que se haya seleccionado una fila
+                // Obtener el ID del material desde la primera columna de la fila seleccionada
+                int idMaterial = (int) jTableMaterial.getValueAt(selectedRow, 0);
+                // Almacenar el idMaterial en una variable global o mostrar en el JTextField
+                idMateriales.setText(String.valueOf(idMaterial)); // Mostrar en el JTextField de ID (si tienes uno)
+                
+
+                // Rellenar los campos con los datos del material seleccionado
+                jTextFieldNombre.setText(jTableMaterial.getValueAt(selectedRow, 1).toString());
+                jTextFieldCategoria.setText(jTableMaterial.getValueAt(selectedRow, 2).toString());
+                jTextAreaDescripcion.setText(jTableMaterial.getValueAt(selectedRow, 3).toString());
+                Unidades.setText(jTableMaterial.getValueAt(selectedRow, 4).toString());
+                UnidadesMedida.setText(jTableMaterial.getValueAt(selectedRow, 5).toString());
+                jTextFieldUbiAlmacen.setText(jTableMaterial.getValueAt(selectedRow, 6).toString());
+                jLabelFecha.setText(jTableMaterial.getValueAt(selectedRow, 7).toString());  // Fecha
+                jTextFieldPrecioUNI.setText(jTableMaterial.getValueAt(selectedRow, 8).toString());
+                PrecioTotal.setText(jTableMaterial.getValueAt(selectedRow, 9).toString());
+            }
+        }
+    });
+
+    // Agregar un ListSelectionListener para detectar la selección de filas en la tabla
+    jTableMaterial.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        public void valueChanged(ListSelectionEvent event) {
+            // Verificar que no se esté actualizando mientras se selecciona
+            if (!event.getValueIsAdjusting()) {
+                // Obtener la fila seleccionada
+                int selectedRow = jTableMaterial.getSelectedRow();
+
+                // Verificar que hay una fila seleccionada
+                if (selectedRow != -1) {
+                    // Obtener los datos de la fila seleccionada y rellenar los campos
+                    idMateriales.setText(jTableMaterial.getValueAt(selectedRow, 0).toString());
+                    jTextFieldNombre.setText(jTableMaterial.getValueAt(selectedRow, 1).toString());
+                    jTextFieldCategoria.setText(jTableMaterial.getValueAt(selectedRow, 2).toString());
+                    jTextAreaDescripcion.setText(jTableMaterial.getValueAt(selectedRow, 3).toString());
+                    Unidades.setText(jTableMaterial.getValueAt(selectedRow, 4).toString());
+                    UnidadesMedida.setText(jTableMaterial.getValueAt(selectedRow, 5).toString());
+                    jTextFieldUbiAlmacen.setText(jTableMaterial.getValueAt(selectedRow, 6).toString());
+                    jLabelFecha.setText(jTableMaterial.getValueAt(selectedRow, 7).toString());
+                    jTextFieldPrecioUNI.setText(jTableMaterial.getValueAt(selectedRow, 8).toString());
+                    PrecioTotal.setText(jTableMaterial.getValueAt(selectedRow, 9).toString());
+                    
+                    
+                }
+            }
+        }
+    });
         
     }
+        
     
     
     
@@ -84,7 +142,7 @@ public class Materiales extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         Unidades = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        jButtonEDITAR = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -97,9 +155,9 @@ public class Materiales extends javax.swing.JPanel {
         jLabel17 = new javax.swing.JLabel();
         jTextFieldPrecioUNI = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jTextFieldPrecioTOTAL = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         UnidadesMedida = new javax.swing.JTextField();
+        PrecioTotal = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         BOTONPanel = new javax.swing.JButton();
         BOTONUsuarios = new javax.swing.JButton();
@@ -208,7 +266,12 @@ public class Materiales extends javax.swing.JPanel {
 
         jLabel8.setText("Ubicacion Almacen");
 
-        jButton5.setText("Editar");
+        jButtonEDITAR.setText("Editar");
+        jButtonEDITAR.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonEDITARMouseClicked(evt);
+            }
+        });
 
         jButton6.setText("Eliminar");
 
@@ -243,6 +306,8 @@ public class Materiales extends javax.swing.JPanel {
 
         jLabel12.setText("Unidad Medida");
 
+        PrecioTotal.setText("Precio");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -250,29 +315,26 @@ public class Materiales extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(idMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextFieldNombre)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jTextFieldCategoria)
-                                    .addComponent(jLabel6)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
-                                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldNombre)
+                            .addComponent(jLabel5)
+                            .addComponent(jTextFieldCategoria)
+                            .addComponent(jLabel6)
+                            .addComponent(jButtonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(jLabel3)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(jButtonEDITAR, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(jLabel3))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,14 +349,16 @@ public class Materiales extends javax.swing.JPanel {
                             .addComponent(jLabelFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane2)
                             .addComponent(jTextFieldUbiAlmacen)
-                            .addComponent(jTextFieldPrecioTOTAL)
                             .addComponent(jTextFieldPrecioUNI)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel10)
-                                    .addComponent(jLabel18)
-                                    .addComponent(jLabel17))
+                                    .addComponent(jLabel17)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel18)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(PrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,16 +410,16 @@ public class Materiales extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldPrecioUNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldPrecioTOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(PrecioTotal))
+                .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5)
+                    .addComponent(jButtonEDITAR)
                     .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonGuardar)
-                .addGap(26, 26, 26))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                     .addContainerGap(350, Short.MAX_VALUE)
@@ -514,55 +578,58 @@ public class Materiales extends javax.swing.JPanel {
     private void jButtonGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarMouseClicked
              try {
 
-                        // Obtener la conexión a la base de datos
-               Connection connection = Conexion.getConnection();
+                    // Obtener la conexión a la base de datos
+                    Connection connection = Conexion.getConnection();
 
-               // Crear una instancia de UsuariosDAO con la conexión
-               MaterialesDAO materialesDAO = new MaterialesDAO(connection);
+                    // Crear una instancia de MaterialesDAO con la conexión
+                    MaterialesDAO materialesDAO = new MaterialesDAO(connection);
 
-               // Obtener los valores de los campos
-               String nombreMaterial = jTextFieldNombre.getText();
-               String categoria = jTextFieldCategoria.getText();
-               String descripcion = jTextAreaDescripcion.getText();
-               float unidades = Float.parseFloat(Unidades.getText());
-               String unidadMedida = UnidadesMedida.getText();
-               String ubicacion = jTextFieldUbiAlmacen.getText();
+                    // Obtener los valores de los campos
+                    String nombreMaterial = jTextFieldNombre.getText();
+                    String categoria = jTextFieldCategoria.getText();
+                    String descripcion = jTextAreaDescripcion.getText();
+                    float unidades = Float.parseFloat(Unidades.getText());
+                    String unidadMedida = UnidadesMedida.getText();
+                    String ubicacion = jTextFieldUbiAlmacen.getText();
 
-               // Obtener la fecha actual usando LocalDate
-               LocalDate fechaCompra = LocalDate.now();  
-               String fechaCompraString = fechaCompra.toString();  // Convertir la fecha a String en formato 'yyyy-MM-dd'
+                    // Obtener la fecha actual usando LocalDate
+                    LocalDate fechaCompra = LocalDate.now();  
+                    String fechaCompraString = fechaCompra.toString();  // Convertir la fecha a String en formato 'yyyy-MM-dd'
 
-               double precioUnitario = Double.parseDouble(jTextFieldPrecioUNI.getText());
-               double precioTotal = Double.parseDouble(jTextFieldPrecioTOTAL.getText());
+                    double precioUnitario = Double.parseDouble(jTextFieldPrecioUNI.getText());
 
-               // Crear un objeto Materiales
-               Material nuevoMaterial = new Material(
-                       0,
-                       nombreMaterial,
-                       categoria,
-                       descripcion, 
-                       (int) unidades,
-                       unidadMedida,
-                       ubicacion,
-                       fechaCompraString,
-                       precioUnitario,
-                       precioTotal
-               );
+                    // Calcular el precio total multiplicando las unidades por el precio unitario
+                    double precioTotal = unidades * precioUnitario;
 
-               // Llamar al DAO para guardar el material
-               
-               materialesDAO.addMaterial(nuevoMaterial);
+                    // Mostrar el precio total de forma inmediata en el JTextField correspondiente
+                    PrecioTotal.setText(String.valueOf(precioTotal));
 
-               JOptionPane.showMessageDialog(this, "Material registrado exitosamente.");
+                    // Crear un objeto Material
+                    Material nuevoMaterial = new Material(
+                        0,
+                        nombreMaterial,
+                        categoria,
+                        descripcion, 
+                        (int) unidades,
+                        unidadMedida,
+                        ubicacion,
+                        fechaCompraString,
+                        precioUnitario,
+                        precioTotal
+                    );
 
+                    // Llamar al DAO para guardar el material
+                    materialesDAO.addMaterial(nuevoMaterial);
 
+                    JOptionPane.showMessageDialog(this, "Material registrado exitosamente.");
 
-           } catch (SQLException e) {
-               e.printStackTrace();
-               JOptionPane.showMessageDialog(this, "Error al guardar el material: " + e.getMessage());
-           } catch (NumberFormatException e) {
-               JOptionPane.showMessageDialog(this, "Error en el formato de unidades o precio.");
-           }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al guardar el material: " + e.getMessage());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Error en el formato de unidades o precio.");
+                }
+
     }//GEN-LAST:event_jButtonGuardarMouseClicked
 
     private void BOTONPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPanelMouseClicked
@@ -639,6 +706,68 @@ public class Materiales extends javax.swing.JPanel {
             System.out.println("Bandera 5");
             frame.revalidate(); // Actualizar la interfaz
     }//GEN-LAST:event_BOTONControlHerramientasMouseClicked
+
+    private void jButtonEDITARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEDITARMouseClicked
+        
+               try {
+        // Obtener la conexión a la base de datos
+        Connection connection = Conexion.getConnection();
+        MaterialesDAO materialesDAO = new MaterialesDAO(connection);
+
+        // Obtener los valores editados de los campos
+        String nombreMaterial = jTextFieldNombre.getText();
+        String categoria = jTextFieldCategoria.getText();
+        String descripcion = jTextAreaDescripcion.getText();
+        float unidades = Float.parseFloat(Unidades.getText());
+        String unidadMedida = UnidadesMedida.getText();
+        String ubicacion = jTextFieldUbiAlmacen.getText();
+        
+                // Obtener la fecha actual usando LocalDate
+                LocalDate fechaCompra = LocalDate.now();  
+                
+        
+        
+        double precioUnitario = Double.parseDouble(jTextFieldPrecioUNI.getText());
+        double precioTotal = precioUnitario * unidades;  // Calcular el precio total
+
+        // Obtener el ID del usuario seleccionado en la tabla
+            int selectedRow = jTableMaterial.getSelectedRow();
+            
+            if (selectedRow != -1) {
+                int idMaterial = Integer.parseInt(jTableMaterial.getValueAt(selectedRow, 0).toString());
+                Material materialEditado = new Material(
+                idMaterial, // ID del material seleccionado
+                nombreMaterial,
+                categoria,
+                descripcion, (int) unidades,
+                unidadMedida,
+                ubicacion,
+                fechaCompra.toString(), // Convertir fecha a String // Convertir la fecha a String en formato 'yyyy-MM-dd'
+                precioUnitario,
+                precioTotal
+        );
+
+                
+        // Actualizar el usuario en la base de datos
+        MaterialesDAO MaterialDAO = new MaterialesDAO(Conexion.getConnection());
+        materialesDAO.updateMaterial(materialEditado);
+         
+        JOptionPane.showMessageDialog(this, "Material actualizado exitosamente.");
+        
+        // Recargar la tabla para mostrar los cambios
+        cargarMateriales();
+    } else {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona un usuario en la tabla.");
+            }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Error en el formato de unidades o precio.");
+    }   catch (SQLException ex) {
+            Logger.getLogger(Materiales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+
+        
+    }//GEN-LAST:event_jButtonEDITARMouseClicked
 private void cargarMateriales() {
     try {
         // Crear una instancia de MaterialDAO
@@ -680,12 +809,13 @@ private void cargarMateriales() {
     private javax.swing.JButton BOTONPanel;
     private javax.swing.JButton BOTONUsuarios;
     private javax.swing.JButton BOTOONInventario;
+    private javax.swing.JLabel PrecioTotal;
     private javax.swing.JTextField Unidades;
     private javax.swing.JTextField UnidadesMedida;
     private javax.swing.JLabel idMateriales;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButtonEDITAR;
     private javax.swing.JButton jButtonGuardar;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
@@ -719,7 +849,6 @@ private void cargarMateriales() {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextFieldCategoria;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPrecioTOTAL;
     private javax.swing.JTextField jTextFieldPrecioUNI;
     private javax.swing.JTextField jTextFieldUbiAlmacen;
     // End of variables declaration//GEN-END:variables

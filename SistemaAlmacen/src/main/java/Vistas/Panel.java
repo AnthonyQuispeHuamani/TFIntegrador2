@@ -42,12 +42,14 @@ public class Panel extends javax.swing.JPanel {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
         BOTONAGREGAR = new javax.swing.JButton();
-        BOTONusuarios = new javax.swing.JButton();
-        BOTONinventario = new javax.swing.JButton();
-        BOTONMaquinas = new javax.swing.JButton();
-        BOTONMateriales = new javax.swing.JButton();
-        BOTONInformes = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         BOTONControlHerramientas = new javax.swing.JButton();
+        BOTONInformes = new javax.swing.JButton();
+        BOTONMateriales = new javax.swing.JButton();
+        BOTONMaquinas = new javax.swing.JButton();
+        BOTONusuarios = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        BOTONControl = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -68,51 +70,17 @@ public class Panel extends javax.swing.JPanel {
             }
         });
 
-        BOTONusuarios.setText("Usuarios");
-        BOTONusuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BOTONusuariosMouseClicked(evt);
-            }
-        });
-        BOTONusuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BOTONusuariosActionPerformed(evt);
-            }
-        });
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        BOTONinventario.setText("Inventario");
-        BOTONinventario.addMouseListener(new java.awt.event.MouseAdapter() {
+        BOTONControlHerramientas.setText("Control Herramientas");
+        BOTONControlHerramientas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BOTONinventarioMouseClicked(evt);
+                BOTONControlHerramientasMouseClicked(evt);
             }
         });
-        BOTONinventario.addActionListener(new java.awt.event.ActionListener() {
+        BOTONControlHerramientas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BOTONinventarioActionPerformed(evt);
-            }
-        });
-
-        BOTONMaquinas.setText("Maquinas");
-        BOTONMaquinas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BOTONMaquinasMouseClicked(evt);
-            }
-        });
-        BOTONMaquinas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BOTONMaquinasActionPerformed(evt);
-            }
-        });
-
-        BOTONMateriales.setText("Materiales");
-        BOTONMateriales.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BOTONMaterialesMouseClicked(evt);
-            }
-        });
-        BOTONMateriales.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BOTONMaterialesActionPerformed(evt);
+                BOTONControlHerramientasActionPerformed(evt);
             }
         });
 
@@ -128,17 +96,100 @@ public class Panel extends javax.swing.JPanel {
             }
         });
 
-        BOTONControlHerramientas.setText("Control Herramientas");
-        BOTONControlHerramientas.addMouseListener(new java.awt.event.MouseAdapter() {
+        BOTONMateriales.setText("Materiales");
+        BOTONMateriales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BOTONControlHerramientasMouseClicked(evt);
+                BOTONMaterialesMouseClicked(evt);
             }
         });
-        BOTONControlHerramientas.addActionListener(new java.awt.event.ActionListener() {
+        BOTONMateriales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BOTONControlHerramientasActionPerformed(evt);
+                BOTONMaterialesActionPerformed(evt);
             }
         });
+
+        BOTONMaquinas.setText("Maquinas");
+        BOTONMaquinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONMaquinasMouseClicked(evt);
+            }
+        });
+        BOTONMaquinas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BOTONMaquinasActionPerformed(evt);
+            }
+        });
+
+        BOTONusuarios.setText("Usuarios");
+        BOTONusuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONusuariosMouseClicked(evt);
+            }
+        });
+        BOTONusuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BOTONusuariosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BOTONMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BOTONInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BOTONControlHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BOTONusuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BOTONMaquinas, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BOTONusuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONMaquinas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BOTONControlHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        BOTONControl.setText("CONTROL ACABADOS");
+        BOTONControl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONControlMouseClicked(evt);
+            }
+        });
+        BOTONControl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BOTONControlActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BOTONControl, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BOTONControl, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         jMenu3.setText("File");
         jMenuBar1.add(jMenu3);
@@ -157,32 +208,20 @@ public class Panel extends javax.swing.JPanel {
                 .addComponent(BOTONAGREGAR, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BOTONusuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BOTONinventario, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BOTONMaquinas, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BOTONMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BOTONInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BOTONControlHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(BOTONusuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BOTONinventario, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BOTONMaquinas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BOTONMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BOTONInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BOTONControlHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 267, Short.MAX_VALUE)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 316, Short.MAX_VALUE)
                 .addComponent(BOTONAGREGAR)
                 .addGap(35, 35, 35))
         );
@@ -261,22 +300,6 @@ public class Panel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_BOTONusuariosActionPerformed
 
-    private void BOTONinventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONinventarioMouseClicked
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            System.out.println("Bandera 5");
-            frame.setSize(1500, 810);
-            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Materiales()); // Cambiar al nuevo panel
-            frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
-            System.out.println("Bandera 5");
-            frame.revalidate(); // Actualizar la interfaz
-    }//GEN-LAST:event_BOTONinventarioMouseClicked
-
-    private void BOTONinventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONinventarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BOTONinventarioActionPerformed
-
     private void BOTONMaquinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONMaquinasMouseClicked
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             System.out.println("Bandera 5");
@@ -342,18 +365,28 @@ public class Panel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_BOTONControlHerramientasActionPerformed
 
+    private void BOTONControlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONControlMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONControlMouseClicked
+
+    private void BOTONControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONControlActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONControlActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BOTONAGREGAR;
+    private javax.swing.JButton BOTONControl;
     private javax.swing.JButton BOTONControlHerramientas;
     private javax.swing.JButton BOTONInformes;
     private javax.swing.JButton BOTONMaquinas;
     private javax.swing.JButton BOTONMateriales;
-    private javax.swing.JButton BOTONinventario;
     private javax.swing.JButton BOTONusuarios;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
