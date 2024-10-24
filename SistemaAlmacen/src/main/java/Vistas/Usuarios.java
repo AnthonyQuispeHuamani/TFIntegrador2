@@ -39,23 +39,13 @@ public class Usuarios extends javax.swing.JPanel {
         cargarOpcionesComboBox();
         cargarUsuarios();
         
-        jComboBoxBRol.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jComboBoxBRolActionPerformed(evt);
-            }
+            jComboBoxBRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jComboBoxBRolActionPerformed(evt);
+                }
         });
         
-                TablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int selectedRow = TablaUsuarios.getSelectedRow(); // Obtener la fila seleccionada
-                if (selectedRow != -1) { // Verificar que se haya seleccionado una fila
-                    // Obtener el ID del usuario desde la primera columna de la fila seleccionada (o la columna correspondiente al ID)
-                    int idUsuario = (int) TablaUsuarios.getValueAt(selectedRow, 0); 
-                    // Almacenar el idUsuario en una variable global o usarlo directamente al eliminar
-                    IDUsuario.setText(String.valueOf(idUsuario)); // Mostrar en el JTextField, opcional
-                }
-            }
-        });
+                
         
         
         // Agregar un ListSelectionListener para detectar la selección de filas en la tabla
@@ -114,6 +104,7 @@ public class Usuarios extends javax.swing.JPanel {
         jComboBoxBEstado.addItem("No capacitado");
         
     } 
+    
     private void limpiarCampos() {
     IDUsuario.setText("0");
     jTextFieldNombre.setText("");
@@ -643,7 +634,6 @@ public class Usuarios extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonGUARDARActionPerformed
 
     private void jButtonGUARDARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGUARDARMouseClicked
-        
         try {
         // Obtener la conexión a la base de datos
         Connection connection = Conexion.getConnection();
@@ -658,17 +648,13 @@ public class Usuarios extends javax.swing.JPanel {
         String apellidoMaterno = jTextFieldApellidoMaterno.getText();
         String telefonoPersonal = jTextFieldTelefono.getText();
         String telefonoEmergencia = jTextFieldTelefonoEmergencia.getText();
-       
         // Obtener el rol seleccionado del ComboBox
         String rol = (String) jComboBoxTipodeROL.getSelectedItem();     
-
         // Obtener el estado de autorización del ComboBox
         String estadoAutorizacion = (String) jComboBoxEstadodeAutorizacion.getSelectedItem();
-        
         // Obtener el email y la contraseña
         String email = jTextFieldEmail.getText();
         String contrasena = jTextFieldCodigo.getText();
-        
         // Crear un nuevo objeto Usuario con los valores obtenidos
         Usuario nuevoUsuario = new Usuario(
             0,  // El ID no es necesario porque es autoincremental en la base de datos
@@ -682,13 +668,10 @@ public class Usuarios extends javax.swing.JPanel {
             estadoAutorizacion,
             email,
             contrasena
-        );
-        
+        ); 
         // Guardar el nuevo usuario en la base de datos
         usuariosDAO.addUsuario(nuevoUsuario);
-        
         JOptionPane.showMessageDialog(this, "Usuario agregado exitosamente, Limpiando CAMPOS");
-        
             limpiarCampos();
     } catch (SQLException e) {
         e.printStackTrace();
@@ -820,8 +803,7 @@ public class Usuarios extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonGUARDAR1ActionPerformed
 
     private void jButtonEDITARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEDITARMouseClicked
-        
-            try {
+           try {
             // Obtener los valores de los campos
             String primerNombre = jTextFieldNombre.getText();
             String segundoNombre = jTextFieldSegundoNombre.getText();
@@ -838,7 +820,6 @@ public class Usuarios extends javax.swing.JPanel {
             int selectedRow = TablaUsuarios.getSelectedRow();
             if (selectedRow != -1) {
                 int idUsuario = Integer.parseInt(TablaUsuarios.getValueAt(selectedRow, 0).toString());
-
                 // Crear un objeto Usuario con los valores actualizados
                 Usuario usuarioActualizado = new Usuario(
                     idUsuario,        // El ID del usuario que queremos modificar
@@ -853,13 +834,10 @@ public class Usuarios extends javax.swing.JPanel {
                     email,
                     contrasena
                 );
-
                 // Actualizar el usuario en la base de datos
                 UsuariosDAO usuariosDAO = new UsuariosDAO(Conexion.getConnection());
                 usuariosDAO.updateUsuario(usuarioActualizado);
-
                 JOptionPane.showMessageDialog(this, "Usuario actualizado exitosamente");
-
                 // Opcional: Volver a cargar los datos de la tabla si es necesario
                 cargarUsuarios();
             } else {
@@ -1018,9 +996,7 @@ public class Usuarios extends javax.swing.JPanel {
                         usuario.getRol(),
                         usuario.getEstadoCapacitacion(),
                         usuario.getEmail(),
-                        usuario.getContrasena(),
-                        
-                        
+                        usuario.getContrasena(),                   
                     };
                     model.addRow(rowData);
                 }
@@ -1029,9 +1005,7 @@ public class Usuarios extends javax.swing.JPanel {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error al cargar usuarios: " + e.getMessage());
             }
-            
-            
-        }
+     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonAlmacen;

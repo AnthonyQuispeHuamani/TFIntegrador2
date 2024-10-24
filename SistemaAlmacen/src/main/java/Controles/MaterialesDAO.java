@@ -70,22 +70,21 @@ public class MaterialesDAO {
 
     // Actualizar un material
     public void updateMaterial(Material material) throws SQLException {
-        String query = "UPDATE Materiales SET nombre_material = ?, categoria_material = ?, descripcion = ?, unidades = ?, unidad_medida = ?, ubicacion_almacen = ?, fecha_compra = ?, precio_unitario = ?, precio_total = ?, id_usuario = ?, fecha_salida = ?, fecha_devolucion = ? WHERE id_material = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, material.getNombreMaterial());
-            stmt.setString(2, material.getCategoria());
-            stmt.setString(3, material.getDescripcion());
-            stmt.setInt(4, material.getUnidades());
-            stmt.setString(5, material.getUnidadMedida());
-            stmt.setString(6, material.getUbicacion());
-            stmt.setString(7, material.getFechaCompra());
-            stmt.setDouble(8, material.getPrecioUnitario());
-            stmt.setDouble(9, material.getPrecioTotal());
-            
-            stmt.setInt(13, material.getIdMaterial());
-            stmt.executeUpdate();
-            System.out.println("Material actualizado exitosamente.");
-        }
+        String query = "UPDATE Materiales SET nombre_material = ?, categoria_material = ?, descripcion = ?, unidades = ?, unidad_medida = ?, ubicacion_almacen = ?, fecha_compra = ?, precio_unitario = ?, precio_total = ? WHERE id_material = ?";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setString(1, material.getNombreMaterial());
+        stmt.setString(2, material.getCategoria());
+        stmt.setString(3, material.getDescripcion());
+        stmt.setFloat(4, material.getUnidades());
+        stmt.setString(5, material.getUnidadMedida());
+        stmt.setString(6, material.getUbicacion());
+        stmt.setString(7, material.getFechaCompra());
+        stmt.setDouble(8, material.getPrecioUnitario());
+        stmt.setDouble(9, material.getPrecioTotal());
+        stmt.setInt(10, material.getIdMaterial());  // Usar el ID del material para identificar el registro
+        stmt.executeUpdate();
+        System.out.println("Material actualizado exitosamente.");
+    }
     }
 
     // Eliminar un material

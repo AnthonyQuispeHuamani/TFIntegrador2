@@ -16,6 +16,8 @@ public class ControlHerramientas extends javax.swing.JPanel {
     /**
      * Creates new form ControlHerramientas
      */
+    int Usuario;
+    
     public ControlHerramientas() {
         initComponents();
     }

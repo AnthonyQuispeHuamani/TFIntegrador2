@@ -24,7 +24,8 @@ public class UsuariosDAO {
 
     // Create - Insertar un nuevo usuario
     public void addUsuario(Usuario usuario) throws SQLException {
-        String query = "INSERT INTO Usuarios (primer_nombre, segundo_nombre, apellido_paterno, apellido_materno, telefono_personal, telefono_emergencia, rol, estado_capacitacion, email, contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Usuarios (primer_nombre, segundo_nombre, apellido_paterno, apellido_materno,"
+                + " telefono_personal, telefono_emergencia, rol, estado_capacitacion, email, contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, usuario.getPrimerNombre());
             stmt.setString(2, usuario.getSegundoNombre());

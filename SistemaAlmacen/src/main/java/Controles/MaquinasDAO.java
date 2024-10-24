@@ -78,20 +78,19 @@ public class MaquinasDAO {
 
     // Actualizar una máquina
     public void updateMaquina(Maquina maquina) throws SQLException {
-        String query = "UPDATE Maquinas SET nombre_herramienta = ?, marca = ?, modelo = ?, numero_serie = ?, estado_herramienta = ?, ubicacion = ?, fecha_entrada = ?, foto_recognicion = ? WHERE id_maquina = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, maquina.getNombreHerramienta());
-            stmt.setString(2, maquina.getMarca());
-            stmt.setString(3, maquina.getModelo());
-            stmt.setString(4, maquina.getNumeroSerie());
-            stmt.setString(5, maquina.getEstadoHerramienta());
-            stmt.setString(6, maquina.getUbicacion());
-            stmt.setString(7, maquina.getFechaEntrada());
-            stmt.setBytes(8, maquina.getFotoRecognicion());
-            stmt.setInt(9, maquina.getIdMaquina());
-            stmt.executeUpdate();
-            System.out.println("Máquina actualizada exitosamente.");
-        }
+        String query = "UPDATE maquinas SET nombre_herramienta = ?, marca = ?, modelo = ?, numero_serie = ?, estado_herramienta = ?, ubicacion = ?, fecha_entrada = ?, foto_recognicion = ? WHERE id_maquina = ?";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setString(1, maquina.getNombreHerramienta());
+        stmt.setString(2, maquina.getMarca());
+        stmt.setString(3, maquina.getModelo());
+        stmt.setString(4, maquina.getNumeroSerie());
+        stmt.setString(5, maquina.getEstadoHerramienta());
+        stmt.setString(6, maquina.getUbicacion());
+        stmt.setString(7, maquina.getFechaEntrada());
+        stmt.setBytes(8, maquina.getFotoRecognicion());
+        stmt.setInt(9, maquina.getIdMaquina());
+        stmt.executeUpdate();
+    }
     }
 
     // Eliminar una máquina
