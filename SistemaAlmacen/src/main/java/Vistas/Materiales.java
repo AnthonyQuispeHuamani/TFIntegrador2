@@ -802,6 +802,7 @@ private void cargarMateriales() {
     }
 }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BOTONControlHerramientas;
     private javax.swing.JButton BOTONInformes;
