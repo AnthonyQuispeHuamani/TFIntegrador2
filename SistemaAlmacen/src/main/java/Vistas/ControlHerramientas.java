@@ -59,7 +59,9 @@ public class ControlHerramientas extends javax.swing.JPanel {
                 }
             }
         });
-
+/**
+     * Creates new form ControlHerramientas
+     */
         jTableMaquinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int selectedRow = jTableMaquinas.getSelectedRow();
@@ -914,7 +916,9 @@ public class ControlHerramientas extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error al cargar el historial de máquinas: " + e.getMessage());
         }
     }
-
+/**
+     * Creates new form ControlHerramientas
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fecha;

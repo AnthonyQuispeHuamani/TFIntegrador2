@@ -14,11 +14,12 @@ public class Conexion {
     public static Connection getConnection() {
         Connection connection = null;
         try {
+            //tec
             // Cargar el driver de MySQL
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Establecer la conexión
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Conexión establecida exitosamente.");
+            System.out.println("Conexion establecida exitosamente.");
         } catch (ClassNotFoundException e) {
             System.out.println("Error al cargar el driver de MySQL: " + e.getMessage());
         } catch (SQLException e) {
