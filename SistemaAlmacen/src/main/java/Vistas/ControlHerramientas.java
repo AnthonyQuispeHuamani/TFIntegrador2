@@ -12,14 +12,29 @@ import Objetos.HistorialMaquinasDetallado;
 import Objetos.Maquina;
 import Objetos.Usuario;
 import Recurso.Conexion;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -33,14 +48,30 @@ public class ControlHerramientas extends javax.swing.JPanel {
     /**
      * Creates new form ControlHerramientas
      */
+    
     int Usuario;
     
     public ControlHerramientas() {
         initComponents();
+        
+        
+
+        // Texto inicial
+        jLabelMensaje.setText("Esperando mensaje...");
+        jLabelMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelMensaje.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 14));
+
+        
+        
+        
         cargarUsuarios();
         cargarMaquinas();
         cargarHistorialMaquinas();
         mostrarFechaActual();
+        // Iniciar la escucha para mensajes desde Python
+        iniciarRecepcionMensajes();
+        
+        
         
                 jTableUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -56,6 +87,7 @@ public class ControlHerramientas extends javax.swing.JPanel {
                     jLabelTrabajador.setText(nombreTrabajador);
                     jLabelUsuario.setText(String.valueOf(idUsuario));
                     jLabelROL.setText(rol);
+                    
                 }
             }
         });
@@ -80,22 +112,125 @@ public class ControlHerramientas extends javax.swing.JPanel {
     public void mouseClicked(java.awt.event.MouseEvent evt) {
         int selectedRow = jTableSALIDAENTRADAHERRAMIENTA.getSelectedRow();
         if (selectedRow != -1) {
-            // Obtener el ID del historial desde la primera columna
-            int idHistorial = (int) jTableSALIDAENTRADAHERRAMIENTA.getValueAt(selectedRow, 0); // Suponiendo que el ID es la primera columna
-            // Guardar el ID en una variable de instancia para usarlo más tarde
-            int idHistorialSeleccionado = idHistorial; // Asegúrate de tener una variable idHistorialSeleccionado definida en tu clase
+            try {
+                // Intentar obtener el ID del historial (columna 0)
+                int idHistorial = Integer.parseInt(jTableSALIDAENTRADAHERRAMIENTA.getValueAt(selectedRow, 0).toString());
 
-            // Actualizar el JComboBox con el estado actual
-            String estadoActual = (String) jTableSALIDAENTRADAHERRAMIENTA.getValueAt(selectedRow, 6); // Suponiendo que el estado está en la séptima columna
-            jComboBoxESTADO2.setSelectedItem(estadoActual); // Cargar el estado actual en el JComboBox
+                // Intentar obtener el ID de la máquina (columna 2)
+                int idMaquina = Integer.parseInt(jTableSALIDAENTRADAHERRAMIENTA.getValueAt(selectedRow, 1).toString());
+
+                // Guardar los ID en variables de instancia para usarlos más tarde
+                int idHistorialSeleccionado = idHistorial;
+                int idMaquinaSeleccionado = idMaquina; // Asegúrate de tener una variable idMaquinaSeleccionado definida en tu clase
+
+                // Actualizar el JComboBox con el estado actual
+                String estadoActual = (String) jTableSALIDAENTRADAHERRAMIENTA.getValueAt(selectedRow, 6); // Suponiendo que el estado está en la séptima columna
+                jComboBoxESTADO2.setSelectedItem(estadoActual); // Cargar el estado actual en el JComboBox
+            } catch (NumberFormatException e) {
+                // Si ocurre un error en la conversión, mostrar un mensaje
+                
+                JOptionPane.showMessageDialog(ControlHerramientas.this, "Error al obtener el ID de la máquina o historial. Verifique los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 });
         
         
-        
-        
     }
+    
+    
+    private void mostrarVentanaEmergente(String mensajeRecibido) {
+    try {
+        // Convertir el mensaje recibido a un número (ID)
+        int idFoto = Integer.parseInt(mensajeRecibido);
+
+        // Usar un JOptionPane para mostrar opciones
+        int opcion = javax.swing.JOptionPane.showConfirmDialog(
+            this, // Componente padre
+            "Se ha recibido una nueva imagen con ID: " + idFoto + ".\n¿Desea visualizarla?", // Mensaje
+            "Nueva imagen recibida", // Título del cuadro de diálogo
+            javax.swing.JOptionPane.YES_NO_OPTION, // Opciones disponibles (Sí, No)
+            javax.swing.JOptionPane.INFORMATION_MESSAGE // Icono
+        );
+
+        // Procesar la opción seleccionada
+        if (opcion == javax.swing.JOptionPane.YES_OPTION) {
+            System.out.println("El usuario aceptó el mensaje.");
+
+            // Lógica para cargar y mostrar la imagen
+            ImageIcon imagen = obtenerImagenDesdeBaseDeDatos(idFoto);
+            if (imagen != null) {
+                jLabelIMAGENrecibida.setIcon(imagen);
+                System.out.println("Imagen mostrada correctamente.");
+            } else {
+                System.err.println("No se encontró la imagen con ID: " + idFoto);
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "No se pudo cargar la imagen. Por favor, verifica la base de datos.", 
+                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (opcion == javax.swing.JOptionPane.NO_OPTION) {
+            System.out.println("El usuario rechazó el mensaje.");
+            // Aquí puedes implementar la lógica al rechazar
+        } else {
+            System.out.println("El usuario cerró la ventana.");
+            // Aquí puedes manejar un cierre sin acción
+        }
+    } catch (NumberFormatException e) {
+        System.err.println("El mensaje recibido no es un ID válido: " + mensajeRecibido);
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "El mensaje recibido no es un ID válido.", 
+            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
+    //----------
+    
+    // Método para conectar al servidor Python y recibir un mensaje
+    private void iniciarRecepcionMensajes() {
+        // Crear un hilo para manejar la recepción de mensajes sin bloquear la interfaz
+        Thread mensajeThread = new Thread(() -> {
+            while (true) {
+                try {
+                    String mensaje = recibirMensajeDesdePython("localhost", 65432);
+                    if (!mensaje.isEmpty()) {
+                        mostrarMensaje(mensaje);
+                    }
+                    // Pausa de 1 segundo antes de intentar recibir otro mensaje
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Error en el hilo de recepción: " + e.getMessage());
+                }
+            }
+        });
+        mensajeThread.start();
+    }
+
+    // Método que establece la conexión al servidor Python y recibe un mensaje
+    private String recibirMensajeDesdePython(String host, int port) {
+        String mensaje = "";
+        try (Socket socket = new Socket(host, port);
+             InputStream input = socket.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+
+            // Leer mensaje del servidorsout    
+            mensaje = reader.readLine();
+            System.out.println(" MENSAJE : " + mensaje);
+            mostrarVentanaEmergente(mensaje);
+            
+        } catch (IOException e) {
+            System.out.println("Error al conectar con el servidor: " + e.getMessage());
+        }
+        return mensaje;
+    }
+
+    // Método para mostrar el mensaje en un JLabel de la interfaz
+    private void mostrarMensaje(String mensaje) {
+        // Asegurarte de actualizar en el Event Dispatch Thread (EDT)
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            jLabelMensaje.setText(mensaje); // Actualiza el JLabel con el mensaje recibido
+        });
+    }
+    // ------------
     
     private void mostrarFechaActual() {
         // Obtener la fecha actual
@@ -124,7 +259,6 @@ public class ControlHerramientas extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         btn_usuarios = new javax.swing.JButton();
         btn_maquinas = new javax.swing.JButton();
-        btn_inventario = new javax.swing.JButton();
         btn_materiales = new javax.swing.JButton();
         btn_informes = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -145,7 +279,7 @@ public class ControlHerramientas extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableMaquinas = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelIMAGENrecibida = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabelMaquina = new javax.swing.JLabel();
@@ -166,6 +300,9 @@ public class ControlHerramientas extends javax.swing.JPanel {
         jTextAreaOBSERVACIONES = new javax.swing.JTextArea();
         jComboBoxESTADO = new javax.swing.JComboBox<>();
         jComboBoxESTADO2 = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        jLabelMensaje = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
@@ -208,13 +345,6 @@ public class ControlHerramientas extends javax.swing.JPanel {
             }
         });
 
-        btn_inventario.setText("INVENTARIO");
-        btn_inventario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_inventarioMouseClicked(evt);
-            }
-        });
-
         btn_materiales.setText("MATERIALES");
         btn_materiales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -236,15 +366,13 @@ public class ControlHerramientas extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_usuarios)
-                .addGap(18, 18, 18)
-                .addComponent(btn_inventario)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_maquinas)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_materiales)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_informes)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -252,11 +380,10 @@ public class ControlHerramientas extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_maquinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(btn_inventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_maquinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_materiales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_informes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -297,22 +424,26 @@ public class ControlHerramientas extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTableUsuarios);
         if (jTableUsuarios.getColumnModel().getColumnCount() > 0) {
-            jTableUsuarios.getColumnModel().getColumn(0).setResizable(false);
+            jTableUsuarios.getColumnModel().getColumn(0).setMinWidth(20);
+            jTableUsuarios.getColumnModel().getColumn(0).setMaxWidth(20);
             jTableUsuarios.getColumnModel().getColumn(1).setResizable(false);
-            jTableUsuarios.getColumnModel().getColumn(2).setResizable(false);
-            jTableUsuarios.getColumnModel().getColumn(3).setResizable(false);
-            jTableUsuarios.getColumnModel().getColumn(4).setResizable(false);
+            jTableUsuarios.getColumnModel().getColumn(2).setMinWidth(80);
+            jTableUsuarios.getColumnModel().getColumn(2).setMaxWidth(80);
+            jTableUsuarios.getColumnModel().getColumn(3).setMinWidth(85);
+            jTableUsuarios.getColumnModel().getColumn(3).setMaxWidth(85);
+            jTableUsuarios.getColumnModel().getColumn(4).setMinWidth(90);
+            jTableUsuarios.getColumnModel().getColumn(4).setMaxWidth(90);
         }
 
         jTableSALIDAENTRADAHERRAMIENTA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre Trab.", "ROL", "Capacitación", "Maquina Asig.", "Numero Serie", "Estado"
+                "ID", "ID Maquina", "Nombre Trab.", "ROL", "Capacitación", "Maquina Asig.", "Numero Serie", "Estado"
             }
         ));
         jScrollPane2.setViewportView(jTableSALIDAENTRADAHERRAMIENTA);
@@ -348,26 +479,43 @@ public class ControlHerramientas extends javax.swing.JPanel {
 
         jTableMaquinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre Hrr.", "Marca", "Numero Serie", "Estado"
+                "ID", "Nombre Hrr.", "Marca", "Numero Serie", "Estado", "Situacion"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(jTableMaquinas);
         if (jTableMaquinas.getColumnModel().getColumnCount() > 0) {
+            jTableMaquinas.getColumnModel().getColumn(0).setMinWidth(20);
+            jTableMaquinas.getColumnModel().getColumn(0).setMaxWidth(20);
             jTableMaquinas.getColumnModel().getColumn(1).setResizable(false);
-            jTableMaquinas.getColumnModel().getColumn(2).setResizable(false);
+            jTableMaquinas.getColumnModel().getColumn(2).setMinWidth(80);
+            jTableMaquinas.getColumnModel().getColumn(2).setMaxWidth(80);
+            jTableMaquinas.getColumnModel().getColumn(3).setMinWidth(85);
+            jTableMaquinas.getColumnModel().getColumn(3).setMaxWidth(85);
+            jTableMaquinas.getColumnModel().getColumn(4).setMinWidth(90);
+            jTableMaquinas.getColumnModel().getColumn(4).setMaxWidth(90);
+            jTableMaquinas.getColumnModel().getColumn(5).setMinWidth(80);
+            jTableMaquinas.getColumnModel().getColumn(5).setMaxWidth(80);
         }
 
         jLabel5.setText("Trabajador");
 
-        jLabel3.setBackground(new java.awt.Color(102, 102, 102));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("FOTO");
+        jLabelIMAGENrecibida.setBackground(new java.awt.Color(102, 102, 102));
+        jLabelIMAGENrecibida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelIMAGENrecibida.setText("FOTO");
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -377,7 +525,7 @@ public class ControlHerramientas extends javax.swing.JPanel {
         jLabelMaquina.setText("Maquina");
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setText("ID SELECCIONADO:");
+        jLabel15.setText("ID:");
 
         jLabelIDMaquina.setText("ID");
 
@@ -386,6 +534,7 @@ public class ControlHerramientas extends javax.swing.JPanel {
 
         jLabel18.setText("FECHA ASIGNADA:");
 
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel22.setText("Obseraciones");
 
         Fecha.setText("--/--/--");
@@ -410,64 +559,70 @@ public class ControlHerramientas extends javax.swing.JPanel {
         });
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel24.setText("ID SELECCIONADO:");
+        jLabel24.setText("ID:");
 
         jLabelUsuario.setText("ID");
 
         jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel30.setText("Estado");
+        jLabel30.setText("SE VA A :");
 
         jTextAreaOBSERVACIONES.setColumns(20);
         jTextAreaOBSERVACIONES.setRows(5);
         jScrollPane4.setViewportView(jTextAreaOBSERVACIONES);
 
-        jComboBoxESTADO.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entregado", "No entregado", "Reparación", "Mantenimiento" }));
+        jComboBoxESTADO.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jComboBoxESTADO.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entregar", "Reparar", "Mantenimiento" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabelMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelROL, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel22)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jScrollPane4))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel21)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabelTrabajador, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelIDMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButtonASIGNAR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(102, 102, 102)
+                        .addComponent(jComboBoxESTADO, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 31, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel30)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxESTADO, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel23)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelROL, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel22)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel18)
+                                            .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel21)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabelTrabajador, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel14)
+                                                .addGap(30, 30, 30)
+                                                .addComponent(jLabelMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel15)
+                                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addGap(17, 17, 17)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelIDMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(21, 21, 21))
+                            .addComponent(jButtonASIGNAR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -487,23 +642,36 @@ public class ControlHerramientas extends javax.swing.JPanel {
                 .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
-                    .addComponent(jLabelROL)
+                    .addComponent(jLabelROL))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Fecha)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
                     .addComponent(jComboBoxESTADO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18)
-                            .addComponent(Fecha)
-                            .addComponent(jLabel22))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonASIGNAR, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(jButtonASIGNAR, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jComboBoxESTADO2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entregado", "No entregado", "Reparación", "Mantenimiento" }));
+        jComboBoxESTADO2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jComboBoxESTADO2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entregado", " " }));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("RECEPCION MENSAJE");
+
+        jLabelMensaje.setText("...");
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("DEVOLUCIÓN");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -511,47 +679,54 @@ public class ControlHerramientas extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane3)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel12)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel13)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField5))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField5))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(102, 102, 102))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
-                        .addComponent(jComboBoxESTADO2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabelIMAGENrecibida, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButtonEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxESTADO2, 0, 126, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(1163, 1163, 1163)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(66, 66, 66)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -560,39 +735,49 @@ public class ControlHerramientas extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(jButton4)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonEstado)
-                                    .addComponent(jComboBoxESTADO2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton4)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel5))
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jComboBoxESTADO2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(jLabel13)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabelMensaje)
+                            .addComponent(jLabel11))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelIMAGENrecibida, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(jLabel19)
+                    .addContainerGap(539, Short.MAX_VALUE)))
         );
 
         jPanel5.setBackground(new java.awt.Color(51, 51, 51));
@@ -606,10 +791,10 @@ public class ControlHerramientas extends javax.swing.JPanel {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,11 +819,12 @@ public class ControlHerramientas extends javax.swing.JPanel {
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1315, Short.MAX_VALUE)
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(33, 33, 33)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jInternalFrame1Layout.setVerticalGroup(
@@ -659,15 +845,14 @@ public class ControlHerramientas extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jInternalFrame1)
-                .addContainerGap())
+                .addComponent(jInternalFrame1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jInternalFrame1)
-                .addContainerGap())
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -698,18 +883,6 @@ public class ControlHerramientas extends javax.swing.JPanel {
             System.out.println("Bandera 5");
             frame.revalidate(); // Actualizar la interfaz
     }//GEN-LAST:event_btn_usuariosMouseClicked
-
-    private void btn_inventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_inventarioMouseClicked
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            System.out.println("Bandera 5");
-            frame.setSize(1500, 810);
-            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
-            frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
-            System.out.println("Bandera 5");
-            frame.revalidate(); // Actualizar la interfaz
-    }//GEN-LAST:event_btn_inventarioMouseClicked
 
     private void btn_maquinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_maquinasMouseClicked
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -763,63 +936,116 @@ public class ControlHerramientas extends javax.swing.JPanel {
 
     private void jButtonASIGNARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonASIGNARMouseClicked
             try {
-            // Asegúrate de que el ID de la máquina y el ID de usuario no estén vacíos
-            if (jLabelIDMaquina.getText().isEmpty() || jLabelUsuario.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor seleccione un usuario y una máquina.");
-                return; // Salir si no hay selección
-            }
-
-            int idMaquina = Integer.parseInt(jLabelIDMaquina.getText());
-            int idUsuario = Integer.parseInt(jLabelUsuario.getText());
-            
-            LocalDate fechaCompra = LocalDate.now();  
-               String fechaCompraString = fechaCompra.toString();  // Convertir la fecha a String en formato 'yyyy-MM-dd'
-            
-            Date fechaMovimiento = new Date(System.currentTimeMillis()); // Utiliza la fecha actual en formato SQL
-            String estado = (String) jComboBoxESTADO.getSelectedItem(); // Obtener el estado seleccionado
-            
-            
-            String observacion = jTextAreaOBSERVACIONES.getText();
-            // Crear instancia del DAO y agregar el historial
-            HistorialMaquinasDAO historialDAO = new HistorialMaquinasDAO(Conexion.getConnection());
-            historialDAO.agregarHistorialMaquina(idMaquina, idUsuario, fechaMovimiento, estado, observacion);
-
-            JOptionPane.showMessageDialog(this, "Historial de máquina agregado exitosamente.");
-            cargarHistorialMaquinas();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(
-
-    this, "Error al agregar historial: " + ex.getMessage());
-        } catch (NumberFormatException ex) {
+                
+                 // Asegúrate de que el ID de la máquina y el ID de usuario sean números válidos
+        String idMaquinaText = jLabelIDMaquina.getText();
+        String idUsuarioText = jLabelUsuario.getText();
+        
+        if (idMaquinaText.isEmpty() || idUsuarioText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione un usuario y una máquina.");
+            return; // Salir si no hay selección
         }
+
+                
+        int idMaquina = Integer.parseInt(jLabelIDMaquina.getText());
+        int idUsuario = Integer.parseInt(jLabelUsuario.getText());
+
+        // Obtener estado según selección
+        String estado = "";
+        switch ((String) jComboBoxESTADO.getSelectedItem()) {
+            case "Entregar":
+                estado = "Entregado";
+                break;
+            case "Reparar":
+                estado = "Reparación";
+                break;
+            case "Mantenimiento":
+                estado = "Mantenimiento";
+                break;
+            default:
+                throw new SQLException("Estado no válido.");
+        }
+
+        LocalDate fechaCompra = LocalDate.now();
+        String fechaCompraString = fechaCompra.toString();  // Convertir la fecha a String en formato 'yyyy-MM-dd'
+
+        Date fechaMovimiento = new Date(System.currentTimeMillis()); // Utiliza la fecha actual en formato SQL
+
+        String observacion = jTextAreaOBSERVACIONES.getText();
+
+        // Obtener el id_foto desde jLabelMensaje
+        Integer idFoto = null;
+        if (!jLabelMensaje.getText().isEmpty()) {
+            idFoto = Integer.parseInt(jLabelMensaje.getText());
+        }
+
+        // Crear instancia del DAO y agregar el historial
+        HistorialMaquinasDAO historialDAO = new HistorialMaquinasDAO(Conexion.getConnection());
+
+        // Verificar si la máquina puede ser asignada
+        if (!historialDAO.verificarSituacionMaquina(idMaquina)) {
+            JOptionPane.showMessageDialog(this, "La máquina no ha sido entregada. No puede ser asignada.");
+            return; // Salir si la máquina no está entregada
+        }
+
+        // Guardar el historial
+        historialDAO.agregarHistorialMaquina(idMaquina, idUsuario, fechaMovimiento, estado, observacion, idFoto);
+
+        // Actualizar estado de la máquina a 'Entregado'
+        historialDAO.actualizarSituacionMaquinaNOENTREGADA(idMaquina);
+
+        JOptionPane.showMessageDialog(this, "Historial de máquina agregado exitosamente.");
+        cargarHistorialMaquinas();
+                cargarMaquinas();
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al agregar historial: " + ex.getMessage());
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Por favor seleccione una imagen a guardar");
+    }
     }//GEN-LAST:event_jButtonASIGNARMouseClicked
 
     private void jButtonEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEstadoMouseClicked
         
             int row = jTableSALIDAENTRADAHERRAMIENTA.getSelectedRow();
-        if (row >= 0) {
-            int idHistorial = (int) jTableSALIDAENTRADAHERRAMIENTA.getValueAt(row, 0); // Obtener ID del historial
+    if (row >= 0) {
+        try {
+            // Obtener los valores seleccionados
+            int idHistorial = Integer.parseInt(jTableSALIDAENTRADAHERRAMIENTA.getValueAt(row, 0).toString()); // Obtener ID del historial
+            int idMaquina = Integer.parseInt(jTableSALIDAENTRADAHERRAMIENTA.getValueAt(row, 1).toString()); // Obtener ID de la máquina
             String nuevoEstado = (String) jComboBoxESTADO2.getSelectedItem(); // Obtener nuevo estado del ComboBox
 
             try {
+                // Instanciar el DAO para el historial
                 HistorialMaquinasDAO historialDAO = new HistorialMaquinasDAO(Conexion.getConnection());
-                historialDAO.updateEstadoHistorial(idHistorial, nuevoEstado); // Método para actualizar el estado
+                
+                // Actualizar el estado del historial
+                historialDAO.updateEstadoHistorial(idHistorial, nuevoEstado); 
+
+                // Actualizar la situación de la máquina
+                historialDAO.actualizarSituacionMaquina(idMaquina); 
 
                 // Mostrar un mensaje de éxito
-                JOptionPane.showMessageDialog(this, "Estado actualizado con éxito.");
+                JOptionPane.showMessageDialog(this, "Estado y situación actualizados con éxito.");
 
-                // Volver a cargar la tabla
+                // Volver a cargar las tablas
                 cargarHistorialMaquinas();
+                cargarMaquinas(); // Cargar nuevamente la lista de máquinas
+
             } catch (SQLException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage());
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila para actualizar.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los IDs. Verifique los datos en la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } 
+        
+else {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila para actualizar.");
+    }
+
         
     }//GEN-LAST:event_jButtonEstadoMouseClicked
     private void cargarUsuarios() {
@@ -858,9 +1084,6 @@ public class ControlHerramientas extends javax.swing.JPanel {
             Connection connection = Conexion.getConnection();
             MaquinasDAO maquinaDAO = new MaquinasDAO(connection);
 
-
-
-
     // Obtener todas las máquinas de la base de datos
             List<Maquina> maquinas = maquinaDAO.getAllMaquinas();
 
@@ -876,7 +1099,8 @@ public class ControlHerramientas extends javax.swing.JPanel {
                     maquina.getNombreHerramienta(),
                     maquina.getMarca(),
                     maquina.getNumeroSerie(),
-                    maquina.getEstadoHerramienta()
+                    maquina.getEstadoHerramienta(),
+                    maquina.getSituacion()
                 };
                 model.addRow(rowData);
             }
@@ -902,6 +1126,7 @@ public class ControlHerramientas extends javax.swing.JPanel {
             for (HistorialMaquinasDetallado historial : historialCompleto) {
                 Object[] rowData = {
                     historial.getIdHistorial(),
+                    historial.getIdMaquina(),
                     historial.getNombreTrabajador(),
                     historial.getRol(),
                     historial.getCapacitacion(),
@@ -916,6 +1141,23 @@ public class ControlHerramientas extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error al cargar el historial de máquinas: " + e.getMessage());
         }
     }
+    
+    // Método para recibir el mensaje de Python
+    private String recibirMensaje() {
+        String mensajeRecibido = "";
+        try (Socket socket = new Socket("localhost", 65433); // Conectar al servidor Python
+             DataInputStream in = new DataInputStream(socket.getInputStream())) {
+
+            // Recibir el mensaje del servidor Python
+            mensajeRecibido = in.readUTF();
+            System.out.println("Mensaje recibido: " + mensajeRecibido);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mensajeRecibido;
+    }
+    
 /**
      * Creates new form ControlHerramientas
      */
@@ -923,7 +1165,6 @@ public class ControlHerramientas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fecha;
     private javax.swing.JButton btn_informes;
-    private javax.swing.JButton btn_inventario;
     private javax.swing.JButton btn_maquinas;
     private javax.swing.JButton btn_materiales;
     private javax.swing.JButton btn_usuarios;
@@ -941,17 +1182,20 @@ public class ControlHerramientas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelIDMaquina;
+    private javax.swing.JLabel jLabelIMAGENrecibida;
     private javax.swing.JLabel jLabelMaquina;
+    private javax.swing.JLabel jLabelMensaje;
     private javax.swing.JLabel jLabelROL;
     private javax.swing.JLabel jLabelTrabajador;
     private javax.swing.JLabel jLabelUsuario;
@@ -977,4 +1221,42 @@ public class ControlHerramientas extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
+
+    private ImageIcon obtenerImagenDesdeBaseDeDatos(int idFoto) {
+    // Consulta para obtener la imagen desde la base de datos
+    String consulta = "SELECT foto_capture FROM fotos_historial WHERE id_foto = ?";
+
+    // Usar la clase Conexion para establecer la conexión
+    Connection conexion = null;
+    try {
+        conexion = Conexion.getConnection();
+        if (conexion != null) {
+            try (PreparedStatement preparedStatement = conexion.prepareStatement(consulta)) {
+                // Configurar el parámetro de la consulta
+                preparedStatement.setInt(1, idFoto);
+
+                // Ejecutar la consulta
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Procesar el resultado
+                if (resultSet.next()) {
+                    // Obtener los bytes del BLOB
+                    byte[] bytesImagen = resultSet.getBytes("foto_capture");
+
+                    // Convertir los bytes en un ImageIcon
+                    if (bytesImagen != null && bytesImagen.length > 0) {
+                        return new ImageIcon(bytesImagen);
+                    }
+                }
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al consultar la base de datos: " + e.getMessage());
+    } finally {
+        // Cerrar la conexión utilizando la clase Conexion
+        Conexion.closeConnection(conexion);
+    }
+
+    return null; // Retorna null si no se encontró la imagen o hubo un error
+}
 }

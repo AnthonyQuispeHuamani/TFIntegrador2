@@ -106,7 +106,6 @@ public class ControlMaterial extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         btn_usuarios = new javax.swing.JButton();
         btn_maquinas = new javax.swing.JButton();
-        btn_inventario = new javax.swing.JButton();
         btn_materiales = new javax.swing.JButton();
         btn_informes = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -190,13 +189,6 @@ public class ControlMaterial extends javax.swing.JPanel {
             }
         });
 
-        btn_inventario.setText("INVENTARIO");
-        btn_inventario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_inventarioMouseClicked(evt);
-            }
-        });
-
         btn_materiales.setText("MATERIALES");
         btn_materiales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -220,9 +212,7 @@ public class ControlMaterial extends javax.swing.JPanel {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_usuarios)
-                .addGap(18, 18, 18)
-                .addComponent(btn_inventario)
-                .addGap(18, 18, 18)
+                .addGap(133, 133, 133)
                 .addComponent(btn_maquinas)
                 .addGap(18, 18, 18)
                 .addComponent(btn_materiales)
@@ -235,10 +225,9 @@ public class ControlMaterial extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_maquinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_maquinas, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(btn_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_inventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_materiales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_informes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -663,18 +652,6 @@ public class ControlMaterial extends javax.swing.JPanel {
             frame.revalidate(); // Actualizar la interfaz
     }//GEN-LAST:event_btn_usuariosMouseClicked
 
-    private void btn_inventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_inventarioMouseClicked
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            System.out.println("Bandera 5");
-            frame.setSize(1500, 810);
-            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
-            frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
-            System.out.println("Bandera 5");
-            frame.revalidate(); // Actualizar la interfaz
-    }//GEN-LAST:event_btn_inventarioMouseClicked
-
     private void btn_maquinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_maquinasMouseClicked
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             System.out.println("Bandera 5");
@@ -857,7 +834,6 @@ private void cargarDevoluciones() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fecha;
     private javax.swing.JButton btn_informes;
-    private javax.swing.JButton btn_inventario;
     private javax.swing.JButton btn_maquinas;
     private javax.swing.JButton btn_materiales;
     private javax.swing.JButton btn_usuarios;

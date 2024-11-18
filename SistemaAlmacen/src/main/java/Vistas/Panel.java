@@ -47,10 +47,6 @@ public class Panel extends javax.swing.JPanel {
         BOTONMaquinas = new javax.swing.JButton();
         BOTONusuarios = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        BOTONControl = new javax.swing.JButton();
-        BOTONControl1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         BOTONControlHerramientas = new javax.swing.JButton();
         BOTONControlHerramientas1 = new javax.swing.JButton();
@@ -144,61 +140,6 @@ public class Panel extends javax.swing.JPanel {
                 .addComponent(BOTONMaquinas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BOTONMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
-
-        BOTONControl.setText("CONTROL ACABADOS");
-        BOTONControl.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BOTONControlMouseClicked(evt);
-            }
-        });
-        BOTONControl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BOTONControlActionPerformed(evt);
-            }
-        });
-
-        BOTONControl1.setText("CONTROL HERRAMIENTAS");
-        BOTONControl1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BOTONControl1MouseClicked(evt);
-            }
-        });
-        BOTONControl1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BOTONControl1ActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Vision por computadoras");
-        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BOTONControl1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BOTONControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(BOTONControl, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BOTONControl1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -321,9 +262,7 @@ public class Panel extends javax.swing.JPanel {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(434, Short.MAX_VALUE))
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,10 +270,9 @@ public class Panel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 393, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(BOTONAGREGAR)
                 .addGap(35, 35, 35))
         );
@@ -478,14 +416,6 @@ public class Panel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_BOTONControlHerramientasActionPerformed
 
-    private void BOTONControlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONControlMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BOTONControlMouseClicked
-
-    private void BOTONControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONControlActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BOTONControlActionPerformed
-
     private void BOTONControlHerramientas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONControlHerramientas1MouseClicked
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             System.out.println("Bandera 5");
@@ -503,19 +433,9 @@ public class Panel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_BOTONControlHerramientas1ActionPerformed
 
-    private void BOTONControl1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONControl1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BOTONControl1MouseClicked
-
-    private void BOTONControl1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONControl1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BOTONControl1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BOTONAGREGAR;
-    private javax.swing.JButton BOTONControl;
-    private javax.swing.JButton BOTONControl1;
     private javax.swing.JButton BOTONControlHerramientas;
     private javax.swing.JButton BOTONControlHerramientas1;
     private javax.swing.JButton BOTONInformes;
@@ -526,12 +446,10 @@ public class Panel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     // End of variables declaration//GEN-END:variables

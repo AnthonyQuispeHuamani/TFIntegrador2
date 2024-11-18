@@ -4,8 +4,7 @@ Vistas\Usuarios$11.class
 Vistas\Inicio$2.class
 Vistas\Panel$13.class
 Vistas\Maquinas$9.class
-Vistas\Usuarios$21.class
-Vistas\Inventario$7.class
+Vistas\Seleccion_DB$1.class
 Vistas\ControlMaterial$2.class
 Vistas\Maquinas$6.class
 Vistas\Materiales$2.class
@@ -14,7 +13,6 @@ Vistas\ControlHerramientas$15.class
 Vistas\Usuarios.class
 Vistas\Main.class
 Vistas\Informes$8.class
-Vistas\Inventario$4.class
 Vistas\Panel$8.class
 Controles\MaterialesDAO.class
 Vistas\ControlMaterial$13.class
@@ -24,6 +22,7 @@ Vistas\Materiales$12.class
 Vistas\Informes$5.class
 Vistas\Maquinas$17.class
 Vistas\Usuarios$6.class
+Vistas\Seleccion_DB.class
 Vistas\Panel$5.class
 Vistas\Usuarios$3.class
 Vistas\Maquinas$1.class
@@ -40,7 +39,6 @@ Vistas\ControlHerramientas$2.class
 Vistas\Usuarios$9.class
 Vistas\Maquinas$18.class
 Vistas\Panel$6.class
-Vistas\Inventario.class
 Vistas\Panel$18.class
 Controles\HistorialMaquinasDAO.class
 Vistas\Informes$9.class
@@ -75,7 +73,6 @@ Vistas\Maquinas.class
 Vistas\Usuarios$13.class
 Vistas\ControlMaterial$12.class
 Vistas\Panel$7.class
-Vistas\Inventario$5.class
 Vistas\Usuarios$7.class
 Vistas\Informes$4.class
 Vistas\Materiales$11.class
@@ -95,14 +92,12 @@ Vistas\Maquinas$20.class
 Vistas\ControlMaterial$9.class
 Vistas\Maquinas$13.class
 Vistas\Panel$17.class
-Vistas\Inventario$6.class
 Objetos\Material.class
 Vistas\Inicio$3.class
 Vistas\ControlHerramientas$8.class
 Vistas\ControlMaterial$1.class
 Vistas\Materiales$6.class
 Vistas\Usuarios$12.class
-Vistas\Inventario$3.class
 Vistas\Panel$9.class
 Objetos\HistorialMaquinasDetallado.class
 Vistas\Maquinas$7.class
@@ -110,7 +105,6 @@ Vistas\ControlHerramientas$14.class
 Vistas\Usuarios$15.class
 Vistas\Materiales$3.class
 Vistas\Usuarios$20.class
-Vistas\ControlMaterial$14.class
 Vistas\Materiales$13.class
 Vistas\Panel$15.class
 Vistas\ControlHerramientas$5.class
@@ -118,7 +112,6 @@ Vistas\ControlHerramientas.class
 Vistas\Usuarios$16.class
 Objetos\HistorialMaquinas.class
 Vistas\ControlHerramientas$16.class
-Vistas\Maquinas$21.class
 Vistas\ControlHerramientas$9.class
 Vistas\Maquinas$15.class
 Vistas\Panel$3.class
@@ -128,9 +121,7 @@ Controles\MaquinasDAO.class
 Vistas\Materiales$4.class
 Vistas\Informes$6.class
 Vistas\ControlMaterial$4.class
-Vistas\Inventario$1.class
 Vistas\Usuarios$5.class
-Vistas\Informes$11.class
 Vistas\Usuarios$17.class
 Vistas\Panel$14.class
 Vistas\ControlMaterial$3.class
@@ -140,8 +131,6 @@ Vistas\ControlHerramientas$4.class
 Vistas\Usuarios$4.class
 Vistas\Informes$7.class
 Objetos\Maquina.class
-Vistas\Materiales$14.class
-Vistas\Inventario$2.class
 Vistas\Panel$4.class
 Vistas\Inicio$1.class
 Objetos\DevolucionMaterialDetallado.class

@@ -161,7 +161,6 @@ public class Materiales extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         BOTONPanel = new javax.swing.JButton();
         BOTONUsuarios = new javax.swing.JButton();
-        BOTOONInventario = new javax.swing.JButton();
         BOTONControlHerramientas = new javax.swing.JButton();
         BOTONMAQUINAS = new javax.swing.JButton();
         BOTONInformes = new javax.swing.JButton();
@@ -418,7 +417,7 @@ public class Materiales extends javax.swing.JPanel {
                     .addComponent(jButtonEDITAR)
                     .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonGuardar)
+                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -445,13 +444,6 @@ public class Materiales extends javax.swing.JPanel {
         BOTONUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BOTONUsuariosMouseClicked(evt);
-            }
-        });
-
-        BOTOONInventario.setText("INVENTARIO");
-        BOTOONInventario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BOTOONInventarioMouseClicked(evt);
             }
         });
 
@@ -485,15 +477,13 @@ public class Materiales extends javax.swing.JPanel {
                 .addComponent(BOTONPanel)
                 .addGap(18, 18, 18)
                 .addComponent(BOTONUsuarios)
-                .addGap(18, 18, 18)
-                .addComponent(BOTOONInventario)
-                .addGap(18, 18, 18)
+                .addGap(133, 133, 133)
                 .addComponent(BOTONMAQUINAS)
                 .addGap(18, 18, 18)
                 .addComponent(BOTONInformes)
                 .addGap(18, 18, 18)
                 .addComponent(BOTONControlHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(512, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -502,7 +492,6 @@ public class Materiales extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BOTONPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(BOTONUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BOTOONInventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BOTONControlHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BOTONInformes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BOTONMAQUINAS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -622,6 +611,7 @@ public class Materiales extends javax.swing.JPanel {
                     materialesDAO.addMaterial(nuevoMaterial);
 
                     JOptionPane.showMessageDialog(this, "Material registrado exitosamente.");
+                    cargarMateriales();
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -655,18 +645,6 @@ public class Materiales extends javax.swing.JPanel {
             System.out.println("Bandera 5");
             frame.revalidate(); // Actualizar la interfaz
     }//GEN-LAST:event_BOTONUsuariosMouseClicked
-
-    private void BOTOONInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTOONInventarioMouseClicked
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            System.out.println("Bandera 5");
-            frame.setSize(1500, 810);
-            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
-            frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
-            System.out.println("Bandera 5");
-            frame.revalidate(); // Actualizar la interfaz
-    }//GEN-LAST:event_BOTOONInventarioMouseClicked
 
     private void BOTONMAQUINASMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONMAQUINASMouseClicked
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -809,7 +787,6 @@ private void cargarMateriales() {
     private javax.swing.JButton BOTONMAQUINAS;
     private javax.swing.JButton BOTONPanel;
     private javax.swing.JButton BOTONUsuarios;
-    private javax.swing.JButton BOTOONInventario;
     private javax.swing.JLabel PrecioTotal;
     private javax.swing.JTextField Unidades;
     private javax.swing.JTextField UnidadesMedida;

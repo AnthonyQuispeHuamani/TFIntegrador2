@@ -137,7 +137,6 @@ public class Usuarios extends javax.swing.JPanel {
         BotonPANEL = new javax.swing.JButton();
         BotonHerramientas = new javax.swing.JButton();
         BotonMaterial = new javax.swing.JButton();
-        BotonAlmacen = new javax.swing.JButton();
         BotonInformes = new javax.swing.JButton();
         BotonControlHerramientas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -213,13 +212,6 @@ public class Usuarios extends javax.swing.JPanel {
             }
         });
 
-        BotonAlmacen.setText("INVENTARIO");
-        BotonAlmacen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BotonAlmacenMouseClicked(evt);
-            }
-        });
-
         BotonInformes.setText("INFORMES");
         BotonInformes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -241,9 +233,7 @@ public class Usuarios extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(BotonPANEL)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BotonAlmacen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(121, 121, 121)
                 .addComponent(BotonHerramientas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BotonMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,7 +249,6 @@ public class Usuarios extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BotonPANEL, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotonAlmacen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotonHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotonMaterial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotonInformes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -886,18 +875,6 @@ public class Usuarios extends javax.swing.JPanel {
             frame.revalidate(); // Actualizar la interfaz
     }//GEN-LAST:event_BotonMaterialMouseClicked
 
-    private void BotonAlmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonAlmacenMouseClicked
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            System.out.println("Bandera 5");
-            frame.setSize(1500, 810);
-            //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
-            //frame.setContentPane(new Informes()); // Cambiar al nuevo panel
-            frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
-            System.out.println("Bandera 5");
-            frame.revalidate(); // Actualizar la interfaz
-    }//GEN-LAST:event_BotonAlmacenMouseClicked
-
     private void EliminarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EliminarUsuarioMouseClicked
         
             try {
@@ -1008,7 +985,6 @@ public class Usuarios extends javax.swing.JPanel {
      }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotonAlmacen;
     private javax.swing.JButton BotonControlHerramientas;
     private javax.swing.JButton BotonHerramientas;
     private javax.swing.JButton BotonInformes;

@@ -389,7 +389,7 @@
                           <Component id="jButton6" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButtonGuardar" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonGuardar" min="-2" pref="41" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -549,15 +549,13 @@
                       <Component id="BOTONPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="BOTONUsuarios" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="BOTOONInventario" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
                       <Component id="BOTONMAQUINAS" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="BOTONInformes" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="BOTONControlHerramientas" min="-2" pref="174" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="512" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -568,7 +566,6 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="BOTONPanel" alignment="0" pref="35" max="32767" attributes="0"/>
                           <Component id="BOTONUsuarios" alignment="0" max="32767" attributes="0"/>
-                          <Component id="BOTOONInventario" alignment="0" max="32767" attributes="0"/>
                           <Component id="BOTONControlHerramientas" alignment="0" max="32767" attributes="0"/>
                           <Component id="BOTONInformes" alignment="0" max="32767" attributes="0"/>
                           <Component id="BOTONMAQUINAS" alignment="0" max="32767" attributes="0"/>
@@ -594,14 +591,6 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONUsuariosMouseClicked"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="BOTOONInventario">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="INVENTARIO"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTOONInventarioMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="BOTONControlHerramientas">

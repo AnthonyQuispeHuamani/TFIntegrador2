@@ -25,7 +25,7 @@ public class MaterialesDAO {
 
     // Crear un nuevo material
     public void addMaterial(Material material) throws SQLException {
-            String query = "INSERT INTO Materiales (nombre_material, categoria_material, descripcion, unidades, unidad_medida, ubicacion_almacen, fecha_compra, precio_unitario, precio_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO materiales (nombre_material, categoria_material, descripcion, unidades, unidad_medida, ubicacion_almacen, fecha_compra, precio_unitario, precio_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, material.getNombreMaterial());
             stmt.setString(2, material.getCategoria());
@@ -40,14 +40,19 @@ public class MaterialesDAO {
             stmt.executeUpdate();
             System.out.println("Material registrado exitosamente.");
         }
+        if (connection != null) connection.close();
     }
 
     // Leer un material por su ID
-    public Material getMaterialById(int idMaterial) throws SQLException {
-        String query = "SELECT * FROM Materiales WHERE id_material = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        public Material getMaterialById(int idMaterial) throws SQLException {
+        String query = "SELECT * FROM materiales WHERE id_material = ?";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = connection.prepareStatement(query);
             stmt.setInt(1, idMaterial);
-            ResultSet rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Material(
                     rs.getInt("idMaterial"),
@@ -60,17 +65,23 @@ public class MaterialesDAO {
                     rs.getString("fecha_compra"),
                     rs.getDouble("precio_unitario"),
                     rs.getDouble("precio_total")
-                   
                 );
             } else {
                 return null;
             }
+        } finally {
+            // Cerrar el ResultSet, Statement y Connection
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+
+
+    if (connection != null) connection.close(); // ¡Cerrar la conexión aquí!
         }
     }
 
     // Actualizar un material
     public void updateMaterial(Material material) throws SQLException {
-        String query = "UPDATE Materiales SET nombre_material = ?, categoria_material = ?, descripcion = ?, unidades = ?, unidad_medida = ?, ubicacion_almacen = ?, fecha_compra = ?, precio_unitario = ?, precio_total = ? WHERE id_material = ?";
+        String query = "UPDATE materiales SET nombre_material = ?, categoria_material = ?, descripcion = ?, unidades = ?, unidad_medida = ?, ubicacion_almacen = ?, fecha_compra = ?, precio_unitario = ?, precio_total = ? WHERE id_material = ?";
     try (PreparedStatement stmt = connection.prepareStatement(query)) {
         stmt.setString(1, material.getNombreMaterial());
         stmt.setString(2, material.getCategoria());
@@ -85,21 +96,23 @@ public class MaterialesDAO {
         stmt.executeUpdate();
         System.out.println("Material actualizado exitosamente.");
     }
+    if (connection != null) connection.close();
     }
 
     // Eliminar un material
     public void deleteMaterial(int idMaterial) throws SQLException {
-        String query = "DELETE FROM Materiales WHERE id_material = ?";
+        String query = "DELETE FROM materiales WHERE id_material = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, idMaterial);
             stmt.executeUpdate();
             System.out.println("Material eliminado exitosamente.");
         }
+        if (connection != null) connection.close();
     }
 
     // Listar todos los materiales
     public List<Material> getAllMateriales() throws SQLException {
-        String query = "SELECT * FROM Materiales";
+        String query = "SELECT * FROM materiales";
         List<Material> materiales = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -120,6 +133,7 @@ public class MaterialesDAO {
                 materiales.add(material);
             }
         }
+        if (connection != null) connection.close();
         return materiales;
     }
 }

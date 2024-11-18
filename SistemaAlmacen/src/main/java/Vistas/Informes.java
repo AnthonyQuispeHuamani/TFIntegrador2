@@ -34,7 +34,6 @@ public class Informes extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         btn_usuarios = new javax.swing.JButton();
-        btn_inventario = new javax.swing.JButton();
         btn_materiales = new javax.swing.JButton();
         btn_maquinas = new javax.swing.JButton();
         btn_controlherramientas = new javax.swing.JButton();
@@ -87,13 +86,6 @@ public class Informes extends javax.swing.JPanel {
             }
         });
 
-        btn_inventario.setText("INVENTARIO");
-        btn_inventario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_inventarioMouseClicked(evt);
-            }
-        });
-
         btn_materiales.setText("MATERIALES");
         btn_materiales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,15 +116,13 @@ public class Informes extends javax.swing.JPanel {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_usuarios)
-                .addGap(18, 18, 18)
-                .addComponent(btn_inventario)
-                .addGap(18, 18, 18)
+                .addGap(133, 133, 133)
                 .addComponent(btn_maquinas)
                 .addGap(18, 18, 18)
                 .addComponent(btn_materiales)
                 .addGap(18, 18, 18)
                 .addComponent(btn_controlherramientas)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(333, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +131,6 @@ public class Informes extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(btn_usuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_inventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_maquinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_materiales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_controlherramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -258,7 +247,7 @@ public class Informes extends javax.swing.JPanel {
                                 .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 50, Short.MAX_VALUE)))
+                        .addGap(0, 78, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -289,8 +278,8 @@ public class Informes extends javax.swing.JPanel {
                             .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel16)
                             .addComponent(jLabel15))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -395,18 +384,6 @@ public class Informes extends javax.swing.JPanel {
         frame.revalidate(); // Actualizar la interfaz
     }//GEN-LAST:event_btn_usuariosMouseClicked
 
-    private void btn_inventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_inventarioMouseClicked
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        System.out.println("Bandera 5");
-        frame.setSize(1500, 810);
-        //frame.setContentPane(new Maquinas()); // Cambiar al nuevo panel
-        //frame.setContentPane(new Usuarios()); // Cambiar al nuevo panel
-        //frame.setContentPane(new Panel()); // Cambiar al nuevo panel
-        frame.setContentPane(new Inventario()); // Cambiar al nuevo panel
-        System.out.println("Bandera 5");
-        frame.revalidate(); // Actualizar la interfaz
-    }//GEN-LAST:event_btn_inventarioMouseClicked
-
     private void btn_maquinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_maquinasMouseClicked
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         System.out.println("Bandera 5");
@@ -465,7 +442,6 @@ public class Informes extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_controlherramientas;
-    private javax.swing.JButton btn_inventario;
     private javax.swing.JButton btn_maquinas;
     private javax.swing.JButton btn_materiales;
     private javax.swing.JButton btn_usuarios;

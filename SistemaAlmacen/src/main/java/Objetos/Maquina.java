@@ -18,12 +18,14 @@ public class Maquina {
     private String ubicacion;
     private String fechaEntrada;
     private byte[] fotoRecognicion;
-    
+    private String situacion; // Nueva columna
 
+    // Constructor vacío
     public Maquina() {
-        
     }
-    public Maquina(int idMaquina, String nombreHerramienta, String marca, String modelo, String numeroSerie, String estadoHerramienta, String ubicacion, String fechaEntrada,byte[] fotoRecognicion) {
+
+    // Constructor con todos los campos
+    public Maquina(int idMaquina, String nombreHerramienta, String marca, String modelo, String numeroSerie, String estadoHerramienta, String ubicacion, String fechaEntrada, byte[] fotoRecognicion, String situacion) {
         this.idMaquina = idMaquina;
         this.nombreHerramienta = nombreHerramienta;
         this.marca = marca;
@@ -33,78 +35,89 @@ public class Maquina {
         this.ubicacion = ubicacion;
         this.fechaEntrada = fechaEntrada;
         this.fotoRecognicion = fotoRecognicion;
+        this.situacion = situacion;
     }
 
-    public byte[] getFotoRecognicion() {
-        return fotoRecognicion;
-    }
-
+    // Getters y setters para todos los campos
     public int getIdMaquina() {
         return idMaquina;
-    }
-
-    public String getNombreHerramienta() {
-        return nombreHerramienta;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public String getNumeroSerie() {
-        return numeroSerie;
-    }
-
-    public String getEstadoHerramienta() {
-        return estadoHerramienta;
-    }
-
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    public String getFechaEntrada() {
-        return fechaEntrada;
     }
 
     public void setIdMaquina(int idMaquina) {
         this.idMaquina = idMaquina;
     }
 
+    public String getNombreHerramienta() {
+        return nombreHerramienta;
+    }
+
     public void setNombreHerramienta(String nombreHerramienta) {
         this.nombreHerramienta = nombreHerramienta;
+    }
+
+    public String getMarca() {
+        return marca;
     }
 
     public void setMarca(String marca) {
         this.marca = marca;
     }
 
+    public String getModelo() {
+        return modelo;
+    }
+
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public String getNumeroSerie() {
+        return numeroSerie;
     }
 
     public void setNumeroSerie(String numeroSerie) {
         this.numeroSerie = numeroSerie;
     }
 
+    public String getEstadoHerramienta() {
+        return estadoHerramienta;
+    }
+
     public void setEstadoHerramienta(String estadoHerramienta) {
         this.estadoHerramienta = estadoHerramienta;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
     }
 
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
 
+    public String getFechaEntrada() {
+        return fechaEntrada;
+    }
+
     public void setFechaEntrada(String fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
+    }
+
+    public byte[] getFotoRecognicion() {
+        return fotoRecognicion;
     }
 
     public void setFotoRecognicion(byte[] fotoRecognicion) {
         this.fotoRecognicion = fotoRecognicion;
     }
+
+    public String getSituacion() {
+        return situacion;
+    }
+
+    public void setSituacion(String situacion) {
+        this.situacion = situacion;
+    }
+
     
 }

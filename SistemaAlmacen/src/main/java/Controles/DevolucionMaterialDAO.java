@@ -32,6 +32,8 @@ public class DevolucionMaterialDAO {
             stmt.setDate(3, new java.sql.Date(devolucion.getFechaDevolucion().getTime()));
             stmt.setFloat(4, devolucion.getCantidadDevolucion());
             stmt.executeUpdate();
+            
+            if (connection != null) connection.close();
         }
     }
     public List<DevolucionMaterialDetallado> getAllDevolucionesDetalladas() throws SQLException {
@@ -63,8 +65,10 @@ public class DevolucionMaterialDAO {
             );
             devolucionesDetalladasList.add(devolucion);
         }
+        if (connection != null) connection.close();
     }
     return devolucionesDetalladasList;
+    
 }
 
 }

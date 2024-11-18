@@ -26,17 +26,64 @@ public class HistorialMaquinasDAO {
         this.connection = connection;
     }
 
-    public void agregarHistorialMaquina(int idMaquina, int idUsuario, Date fechaMovimiento, String estado, String observacion) throws SQLException {
-        String query = "INSERT INTO historialmaquinas (id_maquina, fecha_movimiento, id_usuario, Estado, Observacion) VALUES (?, ?, ?, ?, ?)";
+    public void agregarHistorialMaquina(int idMaquina, int idUsuario, Date fechaMovimiento, String estado, String observacion, Integer idFoto) throws SQLException {
+    // Verificar si la situación de la máquina es 'Entregado'
+    if (!verificarSituacionMaquina(idMaquina)) {
+        throw new SQLException("La máquina no puede ser asignada porque no ha sido entregada.");
+    }
+
+    // Si no se seleccionó una foto, mostrar mensaje de advertencia
+    if (idFoto == null) {
+        throw new SQLException("No se seleccionó una imagen para guardar.");
+    }
+
+    String query = "INSERT INTO historialmaquinas (id_maquina, fecha_movimiento, id_usuario, Estado, Observacion, id_foto) VALUES (?, ?, ?, ?, ?, ?)";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, idMaquina);
+        stmt.setDate(2, new java.sql.Date(fechaMovimiento.getTime()));
+        stmt.setInt(3, idUsuario);
+        stmt.setString(4, estado);
+        stmt.setString(5, observacion);
+        stmt.setInt(6, idFoto);
+        stmt.executeUpdate();
+        if (connection != null) connection.close();
+    }
+}
+    
+    public void actualizarSituacionMaquina(int idMaquina) throws SQLException {
+    String query = "UPDATE maquinas SET situacion = 'Entregado' WHERE id_maquina = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, idMaquina);
-            stmt.setDate(2, new java.sql.Date(fechaMovimiento.getTime()));
-            stmt.setInt(3, idUsuario);
-            stmt.setString(4, estado);
-            stmt.setString(5, observacion);
             stmt.executeUpdate();
+            
+            if (connection != null) connection.close();
         }
     }
+    
+    public void actualizarSituacionMaquinaNOENTREGADA(int idMaquina) throws SQLException {
+    String query = "UPDATE maquinas SET situacion = 'No entregado' WHERE id_maquina = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, idMaquina);
+            stmt.executeUpdate();
+            
+            if (connection != null) connection.close();
+        }
+    }
+    
+    public boolean verificarSituacionMaquina(int idMaquina) throws SQLException {
+    String query = "SELECT situacion FROM maquinas WHERE id_maquina = ?";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, idMaquina);
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                String situacion = rs.getString("situacion");
+                return "Entregado".equals(situacion);  // Si la situación es 'Entregado', devolver true
+            }
+        }
+        if (connection != null) connection.close();
+    }
+    return false;  // Si la situación no es 'Entregado', devolver false
+}
     
     // Listar todo el historial de máquinas
     public List<HistorialMaquinas> getAllHistorialMaquinas() throws SQLException {
@@ -55,6 +102,7 @@ public class HistorialMaquinasDAO {
                 );
                 historialMaquinasList.add(historial);
             }
+            if (connection != null) connection.close();
         }
         return historialMaquinasList;
     }
@@ -95,15 +143,17 @@ public class HistorialMaquinasDAO {
             );
             historialCompletoList.add(historial);
         }
+        if (connection != null) connection.close();
     }
     return historialCompletoList;
 }
 public void updateEstadoHistorial(int idHistorial, String nuevoEstado) throws SQLException {
-    String query = "UPDATE historialmaquinas SET Estado = ? WHERE id_historial = ?";
+    String query = "UPDATE historialmaquinas SET estado = ? WHERE id_historial = ?";
     try (PreparedStatement stmt = connection.prepareStatement(query)) {
         stmt.setString(1, nuevoEstado);
         stmt.setInt(2, idHistorial);
         stmt.executeUpdate();
+        if (connection != null) connection.close();
     }
 }
 
