@@ -7,6 +7,7 @@ package Controles;
 import Objetos.HistorialMaquinas;
 import Objetos.HistorialMaquinasDetallado;
 import Objetos.Usuario;
+import Recurso.Conexion;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -52,21 +53,21 @@ public class HistorialMaquinasDAO {
     
     public void actualizarSituacionMaquina(int idMaquina) throws SQLException {
     String query = "UPDATE maquinas SET situacion = 'Entregado' WHERE id_maquina = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        // Manejo de conexión independiente
+        try (Connection connection = Conexion.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, idMaquina);
             stmt.executeUpdate();
-            
-            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            throw e; // Propaga la excepción para que pueda manejarse en un nivel superior
         }
     }
     
     public void actualizarSituacionMaquinaNOENTREGADA(int idMaquina) throws SQLException {
     String query = "UPDATE maquinas SET situacion = 'No entregado' WHERE id_maquina = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, idMaquina);
-            stmt.executeUpdate();
-            
-            if (connection != null) connection.close();
+        stmt.setInt(1, idMaquina);
+        stmt.executeUpdate();
         }
     }
     
@@ -109,9 +110,9 @@ public class HistorialMaquinasDAO {
     public List<HistorialMaquinasDetallado> getAllHistorialMaquinasCompleto() throws SQLException {
     String query = "SELECT " +
                    "h.id_historial, " +
-                   "h.id_maquina, " + // Agregando el ID de la máquina
-                   "h.fecha_movimiento, " + // Asegúrate de que este campo esté en la tabla
-                   "h.id_usuario, " + // Agregando el ID del usuario
+                   "h.id_maquina, " +
+                   "h.fecha_movimiento, " +
+                   "h.id_usuario, " +
                    "u.primer_nombre AS nombre_trabajador, " +
                    "u.rol, " +
                    "u.estado_capacitacion AS capacitacion, " +
@@ -123,13 +124,16 @@ public class HistorialMaquinasDAO {
                    "INNER JOIN maquinas m ON h.id_maquina = m.id_maquina";
 
     List<HistorialMaquinasDetallado> historialCompletoList = new ArrayList<>();
-    try (PreparedStatement stmt = connection.prepareStatement(query);
+
+    try (Connection connection = Conexion.getConnection(); // Obtener la conexión y gestionarla aquí
+         PreparedStatement stmt = connection.prepareStatement(query);
          ResultSet rs = stmt.executeQuery()) {
+
         while (rs.next()) {
             HistorialMaquinasDetallado historial = new HistorialMaquinasDetallado(
                     rs.getInt("id_historial"),
                     rs.getInt("id_maquina"),
-                    rs.getDate("fecha_movimiento"), // Asegúrate de que el campo esté en la tabla
+                    rs.getDate("fecha_movimiento"),
                     rs.getInt("id_usuario"),
                     rs.getString("estado_historial"),
                     null, // Puedes agregar observaciones si tienes el campo
@@ -137,16 +141,14 @@ public class HistorialMaquinasDAO {
                     rs.getString("rol"),
                     rs.getString("capacitacion"),
                     rs.getString("maquina_asignada"),
-                    rs.getString(
-           
-"numero_serie")
+                    rs.getString("numero_serie")
             );
             historialCompletoList.add(historial);
         }
-        if (connection != null) connection.close();
-    }
+    } // La conexión, el PreparedStatement y el ResultSet se cerrarán automáticamente aquí
     return historialCompletoList;
 }
+
 public void updateEstadoHistorial(int idHistorial, String nuevoEstado) throws SQLException {
     String query = "UPDATE historialmaquinas SET estado = ? WHERE id_historial = ?";
     try (PreparedStatement stmt = connection.prepareStatement(query)) {

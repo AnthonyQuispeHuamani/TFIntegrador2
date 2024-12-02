@@ -299,6 +299,7 @@ public class ControlHerramientas extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextAreaOBSERVACIONES = new javax.swing.JTextArea();
         jComboBoxESTADO = new javax.swing.JComboBox<>();
+        jButtonESTADOHERRAMIENTA = new javax.swing.JButton();
         jComboBoxESTADO2 = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jLabelMensaje = new javax.swing.JLabel();
@@ -573,6 +574,18 @@ public class ControlHerramientas extends javax.swing.JPanel {
         jComboBoxESTADO.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jComboBoxESTADO.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entregar", "Reparar", "Mantenimiento" }));
 
+        jButtonESTADOHERRAMIENTA.setText("ESTADO");
+        jButtonESTADOHERRAMIENTA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonESTADOHERRAMIENTAMouseClicked(evt);
+            }
+        });
+        jButtonESTADOHERRAMIENTA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonESTADOHERRAMIENTAActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -580,13 +593,19 @@ public class ControlHerramientas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonASIGNAR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jComboBoxESTADO, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(102, 102, 102)
+                                        .addComponent(jComboBoxESTADO, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonESTADOHERRAMIENTA))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel23)
@@ -615,14 +634,11 @@ public class ControlHerramientas extends javax.swing.JPanel {
                                             .addComponent(jLabel15)
                                             .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING))
                                         .addGap(17, 17, 17)))
-                                .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelIDMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(21, 21, 21))
-                            .addComponent(jButtonASIGNAR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                                    .addComponent(jLabelUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(21, 21, 21)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -654,7 +670,8 @@ public class ControlHerramientas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
-                    .addComponent(jComboBoxESTADO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxESTADO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonESTADOHERRAMIENTA))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonASIGNAR, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -712,7 +729,9 @@ public class ControlHerramientas extends javax.swing.JPanel {
                                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabelMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabelIMAGENrecibida, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(81, 81, 81)
+                                        .addComponent(jLabelIMAGENrecibida, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -772,7 +791,7 @@ public class ControlHerramientas extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabelIMAGENrecibida, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(16, 16, 16)
@@ -936,74 +955,82 @@ public class ControlHerramientas extends javax.swing.JPanel {
 
     private void jButtonASIGNARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonASIGNARMouseClicked
             try {
-                
-                 // Asegúrate de que el ID de la máquina y el ID de usuario sean números válidos
-        String idMaquinaText = jLabelIDMaquina.getText();
-        String idUsuarioText = jLabelUsuario.getText();
-        
-        if (idMaquinaText.isEmpty() || idUsuarioText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor seleccione un usuario y una máquina.");
-            return; // Salir si no hay selección
-        }
+                // Validar que los campos no estén vacíos
+                String idMaquinaText = jLabelIDMaquina.getText();
+                String idUsuarioText = jLabelUsuario.getText();
 
-                
-        int idMaquina = Integer.parseInt(jLabelIDMaquina.getText());
-        int idUsuario = Integer.parseInt(jLabelUsuario.getText());
+                if (idMaquinaText.isEmpty() || idUsuarioText.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Por favor seleccione un usuario y una máquina.");
+                    return; // Salir si no hay selección
+                }
 
-        // Obtener estado según selección
-        String estado = "";
-        switch ((String) jComboBoxESTADO.getSelectedItem()) {
-            case "Entregar":
-                estado = "Entregado";
-                break;
-            case "Reparar":
-                estado = "Reparación";
-                break;
-            case "Mantenimiento":
-                estado = "Mantenimiento";
-                break;
-            default:
-                throw new SQLException("Estado no válido.");
-        }
+                int idMaquina = Integer.parseInt(idMaquinaText);
+                int idUsuario = Integer.parseInt(idUsuarioText);
 
-        LocalDate fechaCompra = LocalDate.now();
-        String fechaCompraString = fechaCompra.toString();  // Convertir la fecha a String en formato 'yyyy-MM-dd'
+                // Obtener estado según selección
+                String estado = "";
+                switch ((String) jComboBoxESTADO.getSelectedItem()) {
+                    case "Entregar":
+                        estado = "Entregado";
+                        break;
+                    case "Reparar":
+                        estado = "Reparación";
+                        break;
+                    case "Mantenimiento":
+                        estado = "Mantenimiento";
+                        break;
+                    default:
+                        throw new SQLException("Estado no válido.");
+                }
+System.out.println("   8  ");
+                LocalDate fechaCompra = LocalDate.now();
+                String fechaCompraString = fechaCompra.toString();  // Convertir la fecha a String en formato 'yyyy-MM-dd'
 
-        Date fechaMovimiento = new Date(System.currentTimeMillis()); // Utiliza la fecha actual en formato SQL
+                Date fechaMovimiento = new Date(System.currentTimeMillis()); // Utiliza la fecha actual en formato SQL
 
-        String observacion = jTextAreaOBSERVACIONES.getText();
+                String observacion = jTextAreaOBSERVACIONES.getText();
 
-        // Obtener el id_foto desde jLabelMensaje
-        Integer idFoto = null;
-        if (!jLabelMensaje.getText().isEmpty()) {
-            idFoto = Integer.parseInt(jLabelMensaje.getText());
-        }
+                // Obtener el id_foto desde jLabelMensaje
+                Integer idFoto = null;
+                if (!jLabelMensaje.getText().isEmpty()) {
+                    idFoto = Integer.parseInt(jLabelMensaje.getText());
+                }
 
-        // Crear instancia del DAO y agregar el historial
-        HistorialMaquinasDAO historialDAO = new HistorialMaquinasDAO(Conexion.getConnection());
+                // Manejar la conexión con try-with-resources
+                try (Connection connection = Conexion.getConnection()) {
+                    HistorialMaquinasDAO historialDAO = new HistorialMaquinasDAO(connection);
+System.out.println("   9  ");
+                    // Verificar si la máquina puede ser asignada
+                    if (!historialDAO.verificarSituacionMaquina(idMaquina)) {
+System.out.println("   9.1  ");
+                        JOptionPane.showMessageDialog(this, "La máquina no ha sido entregada. No puede ser asignada.");
+                        return; // Salir si la máquina no está entregada
+                    }
 
-        // Verificar si la máquina puede ser asignada
-        if (!historialDAO.verificarSituacionMaquina(idMaquina)) {
-            JOptionPane.showMessageDialog(this, "La máquina no ha sido entregada. No puede ser asignada.");
-            return; // Salir si la máquina no está entregada
-        }
+                    // Guardar el historial
+                    historialDAO.agregarHistorialMaquina(idMaquina, idUsuario, fechaMovimiento, estado, observacion, idFoto);
 
-        // Guardar el historial
-        historialDAO.agregarHistorialMaquina(idMaquina, idUsuario, fechaMovimiento, estado, observacion, idFoto);
-
-        // Actualizar estado de la máquina a 'Entregado'
-        historialDAO.actualizarSituacionMaquinaNOENTREGADA(idMaquina);
-
-        JOptionPane.showMessageDialog(this, "Historial de máquina agregado exitosamente.");
-        cargarHistorialMaquinas();
+System.out.println("   10  " + idMaquina);
+    
+                    ESTADOuser(idMaquina);
+                    // Actualizar estado de la máquina a 'Entregado'
+                    // Actualizar estado de la máquina a 'Entregado'historialDAO.actualizarSituacionMaquinaNOENTREGADA(idMaquina);
+System.out.println("   10.1  ");
+                    JOptionPane.showMessageDialog(this, "Historial de máquina agregado exitosamente.");
+                }
+System.out.println("   11  ");
+                // Recargar datos
+                cargarHistorialMaquinas();
+System.out.println("   12  ");
                 cargarMaquinas();
 
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al agregar historial: " + ex.getMessage());
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Por favor seleccione una imagen a guardar");
-    }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                System.out.println("   13 error  ");
+                JOptionPane.showMessageDialog(this, "Error al agregar historial !!! :¨v " + ex.getMessage());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Por favor seleccione una imagen a guardar");
+            }
     }//GEN-LAST:event_jButtonASIGNARMouseClicked
 
     private void jButtonEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEstadoMouseClicked
@@ -1016,21 +1043,27 @@ public class ControlHerramientas extends javax.swing.JPanel {
             int idMaquina = Integer.parseInt(jTableSALIDAENTRADAHERRAMIENTA.getValueAt(row, 1).toString()); // Obtener ID de la máquina
             String nuevoEstado = (String) jComboBoxESTADO2.getSelectedItem(); // Obtener nuevo estado del ComboBox
 
+            System.out.println("TRY");
+            System.out.println("<<" + idHistorial);
+            System.out.println("<<" + idMaquina);
+            System.out.println("<<" + nuevoEstado);
             try {
                 // Instanciar el DAO para el historial
                 HistorialMaquinasDAO historialDAO = new HistorialMaquinasDAO(Conexion.getConnection());
-                
+                System.out.println("updateEstadoHistorial");
                 // Actualizar el estado del historial
                 historialDAO.updateEstadoHistorial(idHistorial, nuevoEstado); 
-
+                System.out.println("actualizarSituacionMaquina");
                 // Actualizar la situación de la máquina
-                historialDAO.actualizarSituacionMaquina(idMaquina); 
+                  historialDAO.actualizarSituacionMaquina(idMaquina); 
 
                 // Mostrar un mensaje de éxito
                 JOptionPane.showMessageDialog(this, "Estado y situación actualizados con éxito.");
-
+                
                 // Volver a cargar las tablas
+                System.out.println("cargarHistorialMaquinas");
                 cargarHistorialMaquinas();
+                System.out.println("cargarMaquinas");
                 cargarMaquinas(); // Cargar nuevamente la lista de máquinas
 
             } catch (SQLException e) {
@@ -1048,6 +1081,66 @@ else {
 
         
     }//GEN-LAST:event_jButtonEstadoMouseClicked
+
+    private void jButtonESTADOHERRAMIENTAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonESTADOHERRAMIENTAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonESTADOHERRAMIENTAActionPerformed
+
+    private void jButtonESTADOHERRAMIENTAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonESTADOHERRAMIENTAMouseClicked
+        try {
+            // Extraer el ID de la máquina desde el componente que lo contiene
+            String idMaquinaText = jLabelIDMaquina.getText();
+
+            // Validar que el ID no esté vacío
+            if (idMaquinaText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor seleccione una máquina.");
+                return; // Salir si no se selecciona una máquina
+            }
+
+            // Convertir el ID a entero
+            int idMaquina = Integer.parseInt(idMaquinaText);
+
+            // Manejar la conexión y actualizar la situación
+            try (Connection connection = Conexion.getConnection()) {
+                HistorialMaquinasDAO historialDAO = new HistorialMaquinasDAO(connection);
+
+                // Actualizar la situación de la máquina
+                historialDAO.actualizarSituacionMaquinaNOENTREGADA(idMaquina);
+
+                // Notificar éxito
+                JOptionPane.showMessageDialog(this, "La situación de la máquina ha sido actualizada a 'No entregado'.");
+                cargarMaquinas();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al actualizar la situación: " + ex.getMessage());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El ID de la máquina no es válido.");
+        }
+    }//GEN-LAST:event_jButtonESTADOHERRAMIENTAMouseClicked
+    private void ESTADOuser(int a) {
+        try {
+            
+
+            // Manejar la conexión y actualizar la situación
+            try (Connection connection = Conexion.getConnection()) {
+                HistorialMaquinasDAO historialDAO = new HistorialMaquinasDAO(connection);
+
+                // Actualizar la situación de la máquina
+                historialDAO.actualizarSituacionMaquinaNOENTREGADA(a);
+
+                // Notificar éxito
+                JOptionPane.showMessageDialog(this, "La situación de la máquina ha sido actualizada a 'No entregado'.");
+                cargarMaquinas();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al actualizar la situación: " + ex.getMessage());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El ID de la máquina no es válido.");
+        }
+    }
+    
     private void cargarUsuarios() {
         try {
             // Crear una instancia de UsuariosDAO
@@ -1138,7 +1231,7 @@ else {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al cargar el historial de máquinas: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "( cargarHistorialMaquinas )Error al cargar el historial de máquinas: " + e.getMessage());
         }
     }
     
@@ -1171,6 +1264,7 @@ else {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonASIGNAR;
+    private javax.swing.JButton jButtonESTADOHERRAMIENTA;
     private javax.swing.JButton jButtonEstado;
     private javax.swing.JComboBox<String> jComboBoxESTADO;
     private javax.swing.JComboBox<String> jComboBoxESTADO2;

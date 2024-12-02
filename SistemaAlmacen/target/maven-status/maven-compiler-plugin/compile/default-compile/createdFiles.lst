@@ -17,6 +17,7 @@ Vistas\Panel$8.class
 Controles\MaterialesDAO.class
 Vistas\ControlMaterial$13.class
 Vistas\Materiales.class
+Vistas\ControlHerramientas$18.class
 Vistas\ControlMaterial$8.class
 Vistas\Materiales$12.class
 Vistas\Informes$5.class
@@ -29,7 +30,6 @@ Vistas\Maquinas$1.class
 Objetos\PerfilUsuarios.class
 Vistas\Panel$10.class
 Vistas\ControlMaterial$5.class
-Vistas\Panel$16.class
 Vistas\Panel$2.class
 Vistas\Informes$10.class
 Vistas\Maquinas$14.class
@@ -39,7 +39,6 @@ Vistas\ControlHerramientas$2.class
 Vistas\Usuarios$9.class
 Vistas\Maquinas$18.class
 Vistas\Panel$6.class
-Vistas\Panel$18.class
 Controles\HistorialMaquinasDAO.class
 Vistas\Informes$9.class
 Vistas\Usuarios$2.class
@@ -91,7 +90,6 @@ Vistas\Informes$1.class
 Vistas\Maquinas$20.class
 Vistas\ControlMaterial$9.class
 Vistas\Maquinas$13.class
-Vistas\Panel$17.class
 Objetos\Material.class
 Vistas\Inicio$3.class
 Vistas\ControlHerramientas$8.class
@@ -101,12 +99,12 @@ Vistas\Usuarios$12.class
 Vistas\Panel$9.class
 Objetos\HistorialMaquinasDetallado.class
 Vistas\Maquinas$7.class
+Vistas\ControlHerramientas$17.class
 Vistas\ControlHerramientas$14.class
 Vistas\Usuarios$15.class
 Vistas\Materiales$3.class
 Vistas\Usuarios$20.class
 Vistas\Materiales$13.class
-Vistas\Panel$15.class
 Vistas\ControlHerramientas$5.class
 Vistas\ControlHerramientas.class
 Vistas\Usuarios$16.class
