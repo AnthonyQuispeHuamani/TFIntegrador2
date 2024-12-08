@@ -208,8 +208,8 @@ public class UsuariosDAO {
     return usuarios;
 }
     
-    public PerfilUsuarios verificarCredenciales(String email, String contrasena) throws SQLException {
-     String query = "SELECT * FROM perfilesusuarios WHERE email = ? AND contrasena = ?";
+   public PerfilUsuarios verificarCredenciales(String email, String contrasena) throws SQLException {
+    String query = "SELECT * FROM perfilesusuarios WHERE email = ? AND contrasena = ?";
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
@@ -235,9 +235,29 @@ public class UsuariosDAO {
             return null;
         }
     } finally {
-        // Cerrar ResultSet, Statement y Connection
-        if (rs != null) rs.close();
-        if (connection != null) connection.close(); // Cerramos la conexión
+        // Cerrar los recursos en orden inverso a su apertura
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
+
 }

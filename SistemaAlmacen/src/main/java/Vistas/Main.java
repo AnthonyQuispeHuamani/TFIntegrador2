@@ -31,7 +31,8 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1120, 752);
         //frame.setContentPane(new Inicio(usuariosDAO)); // Muestra el JPanel de Inicio
-        frame.setContentPane(new Panel()); // Muestra el JPanel de Inicio
+        frame.setContentPane(new SeleccionDB()); // Muestra el JPanel de Inicio
+        //frame.setContentPane(new Panel()); // Muestra el JPanel de Inicio
         frame.setVisible(true);
     }
 }
